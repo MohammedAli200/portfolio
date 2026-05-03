@@ -42,6 +42,8 @@ const Hero = () => {
   };
 
   const startNarrative = () => {
+    // Explicitly resume audio context on user gesture
+    if (window.speechSynthesis.paused) window.speechSynthesis.resume();
     triggerAISpeech("Welcome to my digital sanctuary. I'm Mohammed Ali, and this is my vision of the future. Let me guide you.");
     document.getElementById("about").scrollIntoView({ behavior: 'smooth' });
   };

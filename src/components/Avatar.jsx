@@ -1,70 +1,118 @@
-import React, { useRef, useEffect, useMemo, useState } from 'react';
-import { useFrame, useGraph } from '@react-three/fiber';
-import { useGLTF, useAnimations } from '@react-three/drei';
+import React, { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { Float, Sphere, MeshDistortMaterial, MeshWobbleMaterial, Box } from '@react-three/drei';
 import * as THREE from 'three';
-import { SkeletonUtils } from 'three-stdlib';
 
-// A high-quality public GLB model of a stylized developer character
-const MODEL_URL = "https://models.readyplayer.me/6485ec93e038933391d4e414.glb";
-
-const Avatar = ({ isSpeaking, ...props }) => {
+const AntigravityTwin = ({ isSpeaking }) => {
   const group = useRef();
-  const { scene, animations } = useGLTF(MODEL_URL);
-  
-  // Clone the scene to avoid issues with multiple instances
-  const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
-  const { nodes, materials } = useGraph(clone);
-  
-  const { actions, names } = useAnimations(animations, group);
-  const [currentAction, setCurrentAction] = useState("Idle");
-
-  useEffect(() => {
-    // Basic animation handling
-    if (actions && actions["Idle"]) {
-      actions["Idle"].fadeIn(0.5).play();
-    }
-    
-    // If speaking, maybe add a slight gesture or jaw movement (if rigged)
-    if (isSpeaking && actions["Talking"]) {
-      actions["Idle"].fadeOut(0.5);
-      actions["Talking"].reset().fadeIn(0.5).play();
-    } else if (actions["Talking"]) {
-      actions["Talking"].fadeOut(0.5);
-      actions["Idle"].reset().fadeIn(0.5).play();
-    }
-  }, [isSpeaking, actions]);
+  const headRef = useRef();
+  const bodyRef = useRef();
+  const leftArmRef = useRef();
+  const rightArmRef = useRef();
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
     
-    // Smoothly follow the mouse with the head
-    if (nodes.Head) {
-      const targetRotation = new THREE.Euler(
-        state.mouse.y * -0.2,
-        state.mouse.x * 0.2,
-        0
-      );
-      nodes.Head.rotation.set(
-        THREE.MathUtils.lerp(nodes.Head.rotation.x, targetRotation.x, 0.1),
-        THREE.MathUtils.lerp(nodes.Head.rotation.y, targetRotation.y, 0.1),
-        0
-      );
+    // Antigravity drift
+    if (group.current) {
+      group.current.position.y = Math.sin(time * 0.5) * 0.1;
+      
+      // Look at mouse
+      const targetRotationY = state.mouse.x * 0.5;
+      const targetRotationX = -state.mouse.y * 0.2;
+      group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetRotationY, 0.05);
+      group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetRotationX, 0.05);
     }
 
-    // Floating drift effect (Antigravity)
-    if (group.current) {
-      group.current.position.y = Math.sin(time) * 0.05;
+    // Breathing / Idle movement
+    if (bodyRef.current) {
+      bodyRef.current.scale.y = 1 + Math.sin(time * 2) * 0.02;
+    }
+
+    // Speaking feedback (Glowing Core)
+    if (headRef.current) {
+      const glowIntensity = isSpeaking ? 2 + Math.abs(Math.sin(time * 20)) * 3 : 1;
+      headRef.current.material.emissiveIntensity = glowIntensity;
+    }
+
+    // Arm idle sway
+    if (leftArmRef.current && rightArmRef.current) {
+      leftArmRef.current.rotation.z = Math.sin(time) * 0.1 - 0.2;
+      rightArmRef.current.rotation.z = -Math.sin(time) * 0.1 + 0.2;
     }
   });
 
   return (
-    <group ref={group} {...props} dispose={null}>
-      <primitive object={clone} />
+    <group ref={group}>
+      {/* Head - Digital Core */}
+      <mesh ref={headRef} position={[0, 1.2, 0]}>
+        <sphereGeometry args={[0.4, 64, 64]} />
+        <meshStandardMaterial 
+          color="#9929EA" 
+          emissive="#9929EA" 
+          emissiveIntensity={1}
+          roughness={0}
+          metalness={1}
+        />
+      </mesh>
+      
+      {/* Futuristic Mask/Visor */}
+      <mesh position={[0, 1.2, 0.35]}>
+        <boxGeometry args={[0.5, 0.15, 0.1]} />
+        <meshStandardMaterial color="#FAEB92" emissive="#FAEB92" emissiveIntensity={2} />
+      </mesh>
+
+      {/* Torso - Geometric Prism */}
+      <mesh ref={bodyRef} position={[0, 0, 0]}>
+        <cylinderGeometry args={[0.4, 0.2, 1.5, 6]} />
+        <MeshDistortMaterial
+          color="#CC66DA"
+          distort={0.2}
+          speed={2}
+          roughness={0}
+          metalness={0.8}
+          transparent
+          opacity={0.8}
+        />
+      </mesh>
+
+      {/* Floating Arms */}
+      <mesh ref={leftArmRef} position={[-0.7, 0.3, 0]}>
+        <boxGeometry args={[0.15, 0.8, 0.15]} />
+        <meshStandardMaterial color="#9929EA" transparent opacity={0.6} />
+      </mesh>
+      <mesh ref={rightArmRef} position={[0.7, 0.3, 0]}>
+        <boxGeometry args={[0.15, 0.8, 0.15]} />
+        <meshStandardMaterial color="#9929EA" transparent opacity={0.6} />
+      </mesh>
+
+      {/* Digital Halo */}
+      <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 1.2, 0]}>
+        <torusGeometry args={[0.7, 0.01, 16, 100]} />
+        <MeshWobbleMaterial color="#FAEB92" speed={2} factor={0.5} />
+      </mesh>
+
+      {/* Aura Sphere */}
+      <Sphere args={[2.5, 32, 32]}>
+        <meshStandardMaterial
+          color="#9929EA"
+          transparent
+          opacity={0.03}
+          wireframe
+        />
+      </Sphere>
+    </group>
+  );
+};
+
+const Avatar = ({ isSpeaking, ...props }) => {
+  return (
+    <group {...props}>
+      <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
+        <AntigravityTwin isSpeaking={isSpeaking} />
+      </Float>
     </group>
   );
 };
 
 export default Avatar;
-
-// Preload the model for performance
-useGLTF.preload(MODEL_URL);

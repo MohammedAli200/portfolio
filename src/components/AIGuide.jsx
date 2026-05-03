@@ -61,7 +61,9 @@ const AIGuide = () => {
       
     } catch (error) {
       console.error(error);
-      speak("My neural link is flickering, but I'm here to help.");
+      const fallbackMsg = "My neural link is momentarily unstable, but I can tell you that Mohammed is a highly skilled developer specializing in immersive AI experiences. How can I help further?";
+      setChatHistory(prev => [...prev, { role: 'ai', text: fallbackMsg }]);
+      speak(fallbackMsg);
     } finally {
       setIsThinking(false);
     }
