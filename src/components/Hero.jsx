@@ -78,9 +78,6 @@ const Hero = () => {
         <Canvas camera={{ position: [0, 0, 1] }}>
           <Suspense fallback={null}>
             <ParticleField />
-            <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
-              <Avatar scale={0.2} position={[0, -0.1, 0]} />
-            </Float>
             <Stars radius={100} depth={50} count={2000} factor={4} saturation={0} fade speed={1} />
           </Suspense>
         </Canvas>

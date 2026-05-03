@@ -42,6 +42,8 @@ const PageLoader = () => (
   </motion.div>
 );
 
+import { Canvas } from '@react-three/fiber';
+
 const MainSite = () => {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
@@ -51,9 +53,13 @@ const MainSite = () => {
       <CustomCursor />
       
       {/* Global AI Avatar Guide */}
-      <div className="fixed bottom-10 right-10 w-40 h-40 z-[150] pointer-events-none">
+      <div className="fixed bottom-10 right-10 w-48 h-48 z-[150] pointer-events-none">
         <div className="w-full h-full pointer-events-auto">
-          <Avatar />
+          <Canvas camera={{ position: [0, 0, 3] }}>
+            <ambientLight intensity={1} />
+            <pointLight position={[10, 10, 10]} />
+            <Avatar />
+          </Canvas>
         </div>
       </div>
 
