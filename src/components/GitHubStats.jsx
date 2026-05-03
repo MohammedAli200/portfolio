@@ -26,7 +26,7 @@ const GitHubStats = () => {
             className="w-full"
           >
             <img 
-              src={`https://github-readme-stats.vercel.app/api?username=${username}&show_icons=true&theme=dark&bg_color=0a0a0a&title_color=00f3ff&text_color=ffffff&icon_color=00f3ff&border_color=333333`} 
+              src={`https://github-readme-stats.vercel.app/api?username=${username}&show_icons=true&theme=dark&bg_color=000000&title_color=9929EA&text_color=FAEB92&icon_color=CC66DA&border_color=333333`} 
               alt="GitHub Stats" 
               className="w-full max-w-[500px] mx-auto rounded-xl shadow-2xl border border-white/10"
             />
@@ -40,7 +40,7 @@ const GitHubStats = () => {
             className="w-full"
           >
             <img 
-              src={`https://github-readme-streak-stats.herokuapp.com/?user=${username}&theme=dark&background=0a0a0a&fire=ff00ff&ring=00f3ff&stroke=00f3ff&currStreakNum=ffffff&sideNums=ffffff&sideLabels=ffffff&dates=ffffff&currStreakLabel=00f3ff&border=333333`} 
+              src={`https://github-readme-streak-stats.herokuapp.com/?user=${username}&theme=dark&background=000000&fire=CC66DA&ring=9929EA&stroke=9929EA&currStreakNum=FAEB92&sideNums=FAEB92&sideLabels=FAEB92&dates=FAEB92&currStreakLabel=9929EA&border=333333`} 
               alt="GitHub Streak" 
               className="w-full max-w-[500px] mx-auto rounded-xl shadow-2xl border border-white/10"
             />
@@ -54,7 +54,7 @@ const GitHubStats = () => {
             className="w-full lg:col-span-2"
           >
             <img 
-              src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${username}&layout=compact&theme=dark&bg_color=0a0a0a&title_color=00f3ff&text_color=ffffff&border_color=333333`} 
+              src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${username}&layout=compact&theme=dark&bg_color=000000&title_color=9929EA&text_color=FAEB92&border_color=333333`} 
               alt="Top Languages" 
               className="w-full max-w-[500px] mx-auto rounded-xl shadow-2xl border border-white/10"
             />

@@ -47,7 +47,7 @@ const Navbar = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="text-sm font-medium text-gray-300 hover:text-neon-primary transition-colors"
+              className="text-sm font-medium text-gray-300 hover:text-accent transition-colors"
             >
               {link.name}
             </motion.a>

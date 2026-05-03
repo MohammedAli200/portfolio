@@ -62,7 +62,7 @@ const Hero = () => {
               wrapper="span"
               speed={50}
               repeat={Infinity}
-              className="text-gray-300"
+              className="text-[#FAEB92]"
             />
           </div>
 

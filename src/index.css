@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-dark-bg: #0a0a0a;
-  --color-neon-primary: #00f3ff;
-  --color-neon-secondary: #ff00ff;
-  --color-glass: rgba(255, 255, 255, 0.05);
-  --color-glass-border: rgba(255, 255, 255, 0.1);
+  --color-dark-bg: #000000;
+  --color-neon-primary: #9929EA;
+  --color-neon-secondary: #CC66DA;
+  --color-accent: #FAEB92;
+  --color-glass: rgba(255, 255, 255, 0.03);
+  --color-glass-border: rgba(153, 41, 234, 0.1);
 }
 
 @layer base {
