@@ -42,7 +42,7 @@ const PageLoader = () => (
   </motion.div>
 );
 
-import { Canvas } from '@react-three/fiber';
+import AIGuide from './components/AIGuide';
 
 const MainSite = () => {
   const { scrollYProgress } = useScroll();
@@ -52,16 +52,7 @@ const MainSite = () => {
     <>
       <CustomCursor />
       
-      {/* Global AI Avatar Guide */}
-      <div className="fixed bottom-10 right-10 w-48 h-48 z-[150] pointer-events-none">
-        <div className="w-full h-full pointer-events-auto">
-          <Canvas camera={{ position: [0, 0, 3] }}>
-            <ambientLight intensity={1} />
-            <pointLight position={[10, 10, 10]} />
-            <Avatar />
-          </Canvas>
-        </div>
-      </div>
+      <AIGuide />
 
       <motion.div className="fixed top-0 left-0 right-0 h-[2px] bg-accent z-[100] origin-left" style={{ scaleX }} />
       <Navbar />
