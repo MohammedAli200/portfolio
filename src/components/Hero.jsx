@@ -5,6 +5,8 @@ import * as random from 'maath/random/dist/maath-random.esm';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 
+import img from "../assets/heroimage.png";
+
 const ParticleField = () => {
   const ref = useRef();
   const sphere = random.inSphere(new Float32Array(2000), { radius: 1.5 });
@@ -56,7 +58,7 @@ const Hero = () => {
           className="space-y-10"
         >
           <div className="space-y-2">
-            <motion.span 
+            <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
@@ -98,13 +100,13 @@ const Hero = () => {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="relative group"
+          className="relative group flex justify-end items-center"
         >
           {/* Main Image Container */}
-          <div className="relative z-10 rounded-[3rem] overflow-hidden border border-earth-light/10 shadow-2xl animate-float">
-            <img 
-              src="/Users/mohammedali/.gemini/antigravity/brain/1188a591-ad83-46f9-bac1-d67bb536fdc6/developer_portrait_1777835399377.png" 
-              alt="Mohammed Ali" 
+          <div className="relative z-10 rounded-[3rem] overflow-hidden shadow-2xl animate-float max-w-sm">
+            <img
+              src={img}
+              alt="Mohammed Ali"
               className="w-full h-auto object-cover scale-105 group-hover:scale-100 transition-transform duration-1000"
             />
             {/* Soft overlay gradient */}
@@ -114,9 +116,6 @@ const Hero = () => {
           {/* Decorative Glows */}
           <div className="glow-spot -top-20 -right-20 w-96 h-96 bg-moss-highlight/10" />
           <div className="glow-spot -bottom-20 -left-20 w-80 h-80 bg-earth-primary/10" />
-          
-          {/* Accent Frame */}
-          <div className="absolute -inset-4 border border-moss-highlight/20 rounded-[3.5rem] -z-10 group-hover:scale-105 transition-transform duration-700" />
         </motion.div>
       </div>
 
