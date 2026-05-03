@@ -67,19 +67,67 @@ const MainSite = () => {
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [ripples, setRipples] = useState([]);
+
+  const addRipple = (e) => {
+    const newRipple = {
+      id: Date.now(),
+      x: e.clientX,
+      y: e.clientY
+    };
+    setRipples(prev => [...prev, newRipple]);
+    setTimeout(() => {
+      setRipples(prev => prev.filter(r => r.id !== newRipple.id));
+    }, 1000);
+  };
 
   useEffect(() => {
-    const lenis = new Lenis();
+    const lenis = new Lenis({
+      lerp: 0.05,
+      smoothWheel: true,
+    });
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
+    
+    window.addEventListener('mousedown', addRipple);
 
     const timer = setTimeout(() => setIsLoading(false), 2500);
-    return () => { lenis.destroy(); clearTimeout(timer); };
+    return () => { 
+      lenis.destroy(); 
+      clearTimeout(timer);
+      window.removeEventListener('mousedown', addRipple);
+    };
   }, []);
 
   return (
     <AnalyticsProvider>
       <div className="relative bg-black min-h-screen selection:bg-neon-primary selection:text-white overflow-x-hidden">
+        {/* Shockwave Layer */}
+        <div className="fixed inset-0 pointer-events-none z-[999]">
+          <AnimatePresence>
+            {ripples.map(ripple => (
+              <motion.div
+                key={ripple.id}
+                initial={{ scale: 0, opacity: 0.5 }}
+                animate={{ scale: 4, opacity: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                style={{
+                  position: 'absolute',
+                  left: ripple.x,
+                  top: ripple.y,
+                  width: '100px',
+                  height: '100px',
+                  marginLeft: '-50px',
+                  marginTop: '-50px',
+                  border: '2px solid rgba(250, 235, 146, 0.3)',
+                  borderRadius: '50%',
+                  boxShadow: '0 0 50px rgba(153, 41, 234, 0.2)'
+                }}
+              />
+            ))}
+          </AnimatePresence>
+        </div>
         <AnimatePresence>
           {isLoading && <PageLoader />}
         </AnimatePresence>

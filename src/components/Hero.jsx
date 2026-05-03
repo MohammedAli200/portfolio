@@ -1,138 +1,130 @@
-import React, { Suspense, useState, useEffect } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Stars, ContactShadows } from '@react-three/drei';
+import React, { Suspense, useRef } from 'react';
+import * as THREE from 'three';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Points, PointMaterial, Stars, Float } from '@react-three/drei';
+import * as random from 'maath/random/dist/maath-random.esm';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
-import { FaMicrophone, FaMicrophoneSlash } from 'react-icons/fa';
+import Magnetic from './Magnetic';
 import Avatar from './Avatar';
 
-const Hero = () => {
-  const [isListening, setIsListening] = useState(false);
-  const [voiceNote, setVoiceNote] = useState("");
-
-  const triggerAISpeech = (text) => {
-    window.dispatchEvent(new CustomEvent('ai-speak', { detail: text }));
-  };
-
-  const handleVoiceCommand = () => {
-    if (!('webkitSpeechRecognition' in window)) {
-      alert("Voice recognition not supported in this browser.");
-      return;
-    }
-
-    const recognition = new window.webkitSpeechRecognition();
-    recognition.lang = 'en-US';
-    recognition.start();
-
-    recognition.onstart = () => setIsListening(true);
-    recognition.onend = () => setIsListening(false);
-
-    recognition.onresult = (event) => {
-      const command = event.results[0][0].transcript.toLowerCase();
-      setVoiceNote(command);
-      
-      if (command.includes("show projects") || command.includes("projects")) {
-        triggerAISpeech("Navigating to projects showcase.");
-        document.getElementById("projects").scrollIntoView({ behavior: 'smooth' });
-      } else if (command.includes("contact")) {
-        triggerAISpeech("Opening contact portal.");
-        document.getElementById("contact").scrollIntoView({ behavior: 'smooth' });
-      } else if (command.includes("about") || command.includes("who is")) {
-        triggerAISpeech("Here is some information about Mohammed Ali.");
-        document.getElementById("about").scrollIntoView({ behavior: 'smooth' });
-      } else if (command.includes("resume") || command.includes("download")) {
-        triggerAISpeech("Preparing resume for download.");
-        window.open("/resume.pdf", "_blank");
-      }
-    };
-  };
+const ParticleField = (props) => {
+  const ref = useRef();
+  const [sphere] = React.useState(() => random.inSphere(new Float32Array(5000), { radius: 1.5 }));
+  
+  useFrame((state, delta) => {
+    ref.current.rotation.x -= delta / 10;
+    ref.current.rotation.y -= delta / 15;
+    
+    // Mouse interaction with particles
+    const { x, y } = state.mouse;
+    ref.current.position.x = THREE.MathUtils.lerp(ref.current.position.x, x * 0.2, 0.1);
+    ref.current.position.y = THREE.MathUtils.lerp(ref.current.position.y, y * 0.2, 0.1);
+  });
 
   return (
+    <group rotation={[0, 0, Math.PI / 4]}>
+      <Points ref={ref} positions={sphere} stride={3} frustumCulled={false} {...props}>
+        <PointMaterial
+          transparent
+          color="#FAEB92"
+          size={0.003}
+          sizeAttenuation={true}
+          depthWrite={false}
+        />
+      </Points>
+    </group>
+  );
+};
+
+const Hero = () => {
+  return (
     <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black">
-      {/* 3D Scene */}
+      {/* 3D Antigravity Scene */}
       <div className="absolute inset-0 z-0">
-        <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} />
+        <Canvas camera={{ position: [0, 0, 1] }}>
           <Suspense fallback={null}>
-            <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-            <Avatar />
-            <ContactShadows opacity={0.4} scale={10} blur={2.4} far={10} />
-            <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
+            <ParticleField />
+            <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
+              <Avatar scale={0.2} position={[0, -0.1, 0]} />
+            </Float>
+            <Stars radius={100} depth={50} count={2000} factor={4} saturation={0} fade speed={1} />
           </Suspense>
         </Canvas>
       </div>
 
-      {/* Content Overlay */}
-      <div className="relative z-10 text-center px-4 pointer-events-none">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="max-w-4xl mx-auto"
-        >
-          <motion.div 
-            animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{ repeat: Infinity, duration: 3 }}
-            className="text-[10px] uppercase tracking-[10px] text-accent mb-6 block"
+      {/* Floating UI Elements */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6">
+        <div className="flex flex-col items-center text-center">
+          <Magnetic strength={2}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 50 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+              className="mb-8"
+            >
+              <h1 className="text-7xl md:text-[10rem] font-black leading-none tracking-tighter uppercase mb-4 text-white">
+                MOHAMMED <br /> 
+                <span className="gradient-text animate-pulse">ALI</span>
+              </h1>
+            </motion.div>
+          </Magnetic>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+            className="text-xl md:text-3xl font-medium mb-12 h-12 text-white/50"
           >
-            Intelligent Interface Active
-          </motion.div>
-          
-          <h1 className="text-7xl md:text-9xl font-black mb-6 tracking-tighter text-white">
-            MOHAMMED <span className="gradient-text">ALI</span>
-          </h1>
-          
-          <div className="text-xl md:text-3xl font-medium mb-12 h-12 text-white/40">
             <TypeAnimation
               sequence={[
-                'Full-Stack Developer',
+                'Zero Gravity Designer',
                 2000,
-                'AI Solutions Architect',
+                'Full-Stack Architect',
                 2000,
-                'Freelance Product Engineer',
+                'Physics-Based Developer',
                 2000,
               ]}
               wrapper="span"
               speed={50}
               repeat={Infinity}
             />
-          </div>
+          </motion.div>
 
-          <div className="flex flex-col md:flex-row gap-6 justify-center items-center pointer-events-auto">
-            <motion.a
-              href="#projects"
-              onClick={() => triggerAISpeech("Exploring Mohammed's innovative projects.")}
-              whileHover={{ scale: 1.05, boxShadow: "0 0 30px #9929EA" }}
-              className="neon-button text-lg font-black px-12 py-4"
-            >
-              EXPLORE WORK
-            </motion.a>
+          <div className="flex flex-col md:flex-row gap-8 items-center">
+            <Magnetic strength={1.5}>
+              <motion.a
+                href="#projects"
+                whileHover={{ scale: 1.1 }}
+                className="neon-button text-sm px-12 py-5 shadow-[0_20px_50px_rgba(153,41,234,0.3)]"
+              >
+                Launch Experience
+              </motion.a>
+            </Magnetic>
             
-            <motion.button
-              onClick={handleVoiceCommand}
-              whileHover={{ scale: 1.1 }}
-              className={`w-16 h-16 rounded-full flex items-center justify-center glass-panel border-white/10 ${isListening ? 'text-red-500 shadow-[0_0_20px_red]' : 'text-accent hover:border-accent/50'}`}
-            >
-              {isListening ? <FaMicrophoneSlash size={24} className="animate-pulse" /> : <FaMicrophone size={24} />}
-            </motion.button>
+            <Magnetic strength={1} repulsion>
+              <motion.a
+                href="#about"
+                className="text-accent uppercase tracking-[5px] text-[10px] font-bold hover:text-white transition-colors"
+              >
+                Learn Mission
+              </motion.a>
+            </Magnetic>
           </div>
-          
-          {voiceNote && (
-            <motion.p 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="mt-6 text-[10px] text-accent font-bold uppercase tracking-[4px]"
-            >
-              " {voiceNote} "
-            </motion.p>
-          )}
-        </motion.div>
+        </div>
       </div>
 
-      {/* Decorative Overlays */}
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black to-transparent pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+      {/* Dynamic Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neon-primary/10 blur-[150px] rounded-full pointer-events-none" />
+      
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2">
+        <motion.div
+          animate={{ y: [0, 20, 0], opacity: [0.2, 1, 0.2] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="w-px h-16 bg-gradient-to-b from-white to-transparent"
+        />
+      </div>
     </section>
   );
 };

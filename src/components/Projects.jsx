@@ -1,70 +1,103 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Tilt } from 'react-tilt';
-import { FaGithub, FaExternalLinkAlt, FaTimes, FaLayerGroup, FaLightbulb, FaRocket, FaRobot } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { FaGithub, FaExternalLinkAlt, FaTimes, FaRobot } from 'react-icons/fa';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import Magnetic from './Magnetic';
 
 const projects = [
   {
     id: 'ai-app',
     title: 'AI-based Application',
-    description: 'An intelligent platform leveraging Gemini AI and Firebase for real-time data processing and user interaction.',
-    tech: ['React', 'Gemini AI', 'Firebase', 'Tailwind'],
+    description: 'An intelligent platform leveraging Gemini AI and Firebase for real-time data processing.',
+    tech: ['React', 'Gemini AI', 'Firebase'],
     image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1000',
     github: 'https://github.com/MohammedAli200',
-    demo: '#'
   },
   {
     id: 'photo-port',
     title: 'Photography Portfolio',
-    description: 'A cinematic, high-performance portfolio website for a professional photographer showcasing visual arts.',
+    description: 'A cinematic, high-performance portfolio website showcasing visual arts.',
     tech: ['React', 'Framer Motion', 'Vanilla CSS'],
     image: 'https://images.unsplash.com/photo-1452581764120-0433290680dc?auto=format&fit=crop&q=80&w=1000',
     github: 'https://github.com/MohammedAli200',
-    demo: '#'
   },
   {
     id: 'college-site',
     title: 'College Website',
-    description: 'A comprehensive educational portal for institutional management and student resources (In Progress).',
-    tech: ['React', 'Node.js', 'MongoDB', 'Express'],
+    description: 'A comprehensive educational portal for institutional management.',
+    tech: ['React', 'Node.js', 'MongoDB'],
     image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80&w=1000',
     github: 'https://github.com/MohammedAli200',
-    demo: '#'
   },
 ];
 
-const ProjectCard = ({ project, index, onOpen }) => {
+const AntigravityCard = ({ project, index, onOpen }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      initial={{ opacity: 0, y: 100 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.2, duration: 0.8 }}
-      viewport={{ once: true }}
+      transition={{ delay: index * 0.2, duration: 1 }}
+      className="relative w-full h-[450px] perspective-container cursor-pointer group"
+      onClick={onOpen}
     >
-      <Tilt
-        options={{ max: 15, scale: 1.02, speed: 400 }}
-        className="glass-panel overflow-hidden h-full flex flex-col group cursor-pointer border-white/5"
+      <div 
+        style={{ transform: "translateZ(50px)" }}
+        className="glass-panel w-full h-full overflow-hidden flex flex-col group-hover:border-neon-primary/50 transition-all duration-500 shadow-2xl"
       >
-        <div className="relative h-60 overflow-hidden" onClick={onOpen}>
+        <div className="relative h-2/3 overflow-hidden">
           <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
-          <div className="absolute bottom-4 left-4 right-4">
-            <h3 className="text-2xl font-black uppercase group-hover:text-neon-primary transition-colors">{project.title}</h3>
-          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
         </div>
-        <div className="p-6 flex-1 flex flex-col bg-white/[0.02]">
-          <p className="text-gray-400 text-sm mb-6 line-clamp-3">{project.description}</p>
+        
+        <div className="p-8 flex-1 flex flex-col bg-white/[0.02]">
+          <h3 className="text-2xl font-black uppercase mb-4 group-hover:text-neon-primary transition-colors">{project.title}</h3>
+          <p className="text-gray-500 text-sm line-clamp-2 mb-6">{project.description}</p>
+          
           <div className="mt-auto flex justify-between items-center">
-            <div className="flex flex-wrap gap-2">
-              {project.tech.slice(0, 3).map(t => (
-                <span key={t} className="text-[10px] px-2 py-0.5 border border-white/10 rounded-full text-gray-500 uppercase font-bold">{t}</span>
+            <div className="flex gap-2">
+              {project.tech.map(t => (
+                <span key={t} className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{t}</span>
               ))}
             </div>
-            <button onClick={onOpen} className="text-accent text-xs font-bold uppercase tracking-widest hover:underline">Details</button>
+            <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-xs group-hover:border-neon-primary transition-colors">
+              +
+            </div>
           </div>
         </div>
-      </Tilt>
+      </div>
     </motion.div>
   );
 };
@@ -75,122 +108,77 @@ const ProjectModal = ({ project, onClose }) => {
 
   useEffect(() => {
     const fetchAIAnalysis = async () => {
-      const cached = localStorage.getItem(`project-ai-${project.id}`);
-      if (cached) {
-        setAiAnalysis(JSON.parse(cached));
-        return;
-      }
-
       setIsAnalyzing(true);
       try {
         const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-        if (!apiKey) throw new Error("API Key missing");
-
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-        const prompt = `Analyze this project: ${project.title}. Description: ${project.description}. 
-        Provide a JSON response with keys: problem, solution, impact. Keep it concise and futuristic.`;
-
+        const prompt = `Explain this project in Antigravity theme: ${project.title}. Provide JSON: {problem, solution, impact}.`;
         const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = response.text();
-        
-        // Basic cleanup of potential markdown in JSON response
-        const cleanJson = text.replace(/```json|```/g, '');
-        const data = JSON.parse(cleanJson);
-        
-        setAiAnalysis(data);
-        localStorage.setItem(`project-ai-${project.id}`, JSON.stringify(data));
-      } catch (error) {
-        setAiAnalysis({
-          problem: "Standard data management constraints.",
-          solution: "Custom-built architecture with advanced scaling.",
-          impact: "Significant efficiency gains and user satisfaction."
-        });
+        const text = result.response.text().replace(/```json|```/g, '');
+        setAiAnalysis(JSON.parse(text));
+      } catch (e) {
+        setAiAnalysis({ problem: "Traditional constraints.", solution: "Innovative UI.", impact: "High engagement." });
       } finally {
         setIsAnalyzing(false);
       }
     };
-
     if (project) fetchAIAnalysis();
   }, [project]);
-
-  if (!project) return null;
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-xl"
+      className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-black/90 backdrop-blur-3xl"
     >
       <motion.div
-        initial={{ y: 50, scale: 0.95 }}
-        animate={{ y: 0, scale: 1 }}
-        exit={{ y: 50, scale: 0.95 }}
-        className="glass-panel w-full max-w-5xl max-h-[90vh] overflow-y-auto border-neon-primary/30 relative"
+        initial={{ scale: 0.8, y: 100 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.8, y: 100 }}
+        className="glass-panel w-full max-w-5xl max-h-[90vh] overflow-y-auto border-neon-primary/30 p-12"
       >
-        <button onClick={onClose} className="absolute top-6 right-6 text-2xl text-white hover:text-neon-primary z-10 p-2 glass-panel">
-          <FaTimes />
-        </button>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2">
-          <div className="h-64 lg:h-full relative">
+        <button onClick={onClose} className="absolute top-8 right-8 text-2xl hover:text-neon-primary"><FaTimes /></button>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div className="rounded-3xl overflow-hidden shadow-2xl">
             <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
           </div>
-
-          <div className="p-8 sm:p-12 space-y-8">
-            <div>
-              <span className="text-accent text-xs font-bold uppercase tracking-[5px] mb-2 block">AI Analysis Active</span>
-              <h2 className="text-4xl sm:text-5xl font-black uppercase mb-4">{project.title}</h2>
-              <div className="flex gap-4">
-                <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-gray-400 hover:text-white"><FaGithub /> GitHub</a>
-                <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-gray-400 hover:text-white"><FaExternalLinkAlt /> Live Demo</a>
-              </div>
-            </div>
-
+          
+          <div className="space-y-8">
+            <h2 className="text-5xl font-black uppercase tracking-tighter">{project.title}</h2>
+            
             <div className="space-y-6">
-              <div className="flex items-center gap-2 text-neon-primary font-bold uppercase text-[10px] tracking-widest">
-                <FaRobot /> Intelligent Insight
+              <div className="flex items-center gap-2 text-neon-primary text-[10px] font-bold uppercase tracking-[4px]">
+                <FaRobot /> AI Project Explainer
               </div>
               
               {isAnalyzing ? (
-                <div className="space-y-4">
-                  <div className="h-4 bg-white/5 animate-pulse rounded w-3/4" />
-                  <div className="h-4 bg-white/5 animate-pulse rounded w-1/2" />
+                <div className="space-y-4 animate-pulse">
+                  <div className="h-4 bg-white/5 w-full rounded" />
+                  <div className="h-4 bg-white/5 w-2/3 rounded" />
                 </div>
               ) : (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 gap-6">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-accent font-bold uppercase text-[10px] tracking-widest">
-                      <FaLayerGroup /> The Problem
-                    </div>
-                    <p className="text-sm text-gray-400 italic">{aiAnalysis?.problem}</p>
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-accent text-[10px] font-bold uppercase mb-2">Problem</h4>
+                    <p className="text-gray-400 text-sm italic">"{aiAnalysis?.problem}"</p>
                   </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-neon-primary font-bold uppercase text-[10px] tracking-widest">
-                      <FaLightbulb /> The Solution
-                    </div>
-                    <p className="text-sm text-gray-400 italic">{aiAnalysis?.solution}</p>
+                  <div>
+                    <h4 className="text-neon-primary text-[10px] font-bold uppercase mb-2">Solution</h4>
+                    <p className="text-gray-400 text-sm italic">"{aiAnalysis?.solution}"</p>
                   </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-neon-secondary font-bold uppercase text-[10px] tracking-widest">
-                      <FaRocket /> The Impact
-                    </div>
-                    <p className="text-sm text-gray-400 italic">{aiAnalysis?.impact}</p>
+                  <div>
+                    <h4 className="text-neon-secondary text-[10px] font-bold uppercase mb-2">Impact</h4>
+                    <p className="text-gray-400 text-sm italic">"{aiAnalysis?.impact}"</p>
                   </div>
-                </motion.div>
+                </div>
               )}
             </div>
-
-            <div className="space-y-4 pt-6">
-              <h4 className="text-xs font-bold uppercase tracking-widest text-gray-500">Infrastructure</h4>
-              <div className="flex flex-wrap gap-3">
-                {project.tech.map(t => (
-                  <span key={t} className="px-4 py-1.5 bg-white/5 border border-white/10 rounded-full text-xs font-medium">{t}</span>
-                ))}
-              </div>
+            
+            <div className="flex gap-4 pt-8">
+              <a href={project.github} className="neon-button text-[10px] px-8 flex items-center gap-2"><FaGithub /> GitHub</a>
             </div>
           </div>
         </div>
@@ -200,23 +188,26 @@ const ProjectModal = ({ project, onClose }) => {
 };
 
 const Projects = () => {
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selected, setSelected] = useState(null);
 
   return (
-    <section id="projects" className="py-24 px-6 max-w-7xl mx-auto">
-      <div className="text-center mb-24">
-        <motion.h2 className="text-6xl font-black uppercase tracking-tighter">Product <span className="gradient-text">Matrix</span></motion.h2>
-        <p className="text-gray-500 mt-4 uppercase tracking-[5px] text-xs">AI-Optimized Project Insights</p>
-      </div>
+    <section id="projects" className="py-32 px-6 bg-black relative">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-32">
+          <h2 className="text-6xl md:text-9xl font-black uppercase tracking-tighter">
+            PRODUCT <br /> <span className="gradient-text">GALAXY</span>
+          </h2>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {projects.map((project, index) => (
-          <ProjectCard key={project.title} project={project} index={index} onOpen={() => setSelectedProject(project)} />
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          {projects.map((p, i) => (
+            <AntigravityCard key={p.id} project={p} index={i} onOpen={() => setSelected(p)} />
+          ))}
+        </div>
       </div>
 
       <AnimatePresence>
-        {selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
+        {selected && <ProjectModal project={selected} onClose={() => setSelected(null)} />}
       </AnimatePresence>
     </section>
   );
