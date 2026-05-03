@@ -4,73 +4,79 @@ import { FaCheckCircle, FaHandshake } from 'react-icons/fa';
 
 const freelanceWork = [
   {
-    title: "Photography Portfolio",
-    description: "Built for a professional visual artist to showcase cinematic captures with a focus on high-performance loading and motion design.",
-    result: "Successfully delivered a digital sanctuary that highlights artistry."
+    title: "Cinematic Photography Hub",
+    description: "Built for a global visual artist to showcase high-fidelity work with a focus on buttery smooth performance and moss-inspired aesthetics.",
+    result: "Delivered a digital sanctuary with 99+ Lighthouse scores."
   },
   {
-    title: "College Institutional Portal",
-    description: "Developing a scalable, secure management system for students and administration with a unified dashboard experience.",
-    result: "Ongoing development with a focus on high availability."
+    title: "Institutional College Portal",
+    description: "Architecting a comprehensive system for academic infrastructure, integrating secure authentication and dynamic resource management.",
+    result: "Ongoing development with a modular full-stack approach."
   }
 ];
 
 const Freelance = () => {
   return (
-    <section id="freelance" className="py-32 px-6 bg-black">
+    <section id="freelance" className="py-32 px-6 bg-dark-bg relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row justify-between items-end mb-24 gap-12">
+        <div className="flex flex-col lg:flex-row justify-between items-end mb-32 gap-12 relative">
           <div className="max-w-2xl">
-            <span className="text-gray-500 text-xs font-bold uppercase tracking-[10px] mb-4 block">Independent Work</span>
-            <h2 className="section-title mb-8">FREELANCE <br /> <span className="text-gray-500">SOLUTIONS</span></h2>
-            <p className="text-gray-400 text-lg italic leading-relaxed">
-              Bridging the gap between creative vision and technical execution for independent clients and institutions.
+            <span className="text-moss-highlight text-xs font-black uppercase tracking-[15px] mb-8 block">Independent Ventures</span>
+            <h2 className="section-title mb-10 text-earth-light">FREELANCE <br /> <span className="text-earth-secondary/40">PARTNERSHIPS</span></h2>
+            <p className="text-earth-light/50 text-xl italic leading-relaxed border-l-4 border-moss-highlight/20 pl-10">
+              "Crafting professional digital identities through focused engineering and cinematic design."
             </p>
           </div>
-          <div className="glass-panel px-8 py-4 border-white/5 flex items-center gap-4">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">Status: Available for hire</span>
+          <div className="bg-earth-primary/[0.1] backdrop-blur-xl px-12 py-6 border border-moss-highlight/20 rounded-[2rem] flex items-center gap-6 shadow-2xl">
+            <div className="w-3 h-3 bg-moss-highlight rounded-full animate-pulse shadow-[0_0_15px_rgba(204,214,127,0.8)]" />
+            <span className="text-[10px] font-black uppercase tracking-[5px] text-earth-light">Status: Accepting Collaborations</span>
           </div>
+          <div className="glow-spot -top-20 -left-20 w-80 h-80 bg-earth-primary/5 -z-10" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {freelanceWork.map((work, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ delay: index * 0.1, duration: 0.8 }}
               viewport={{ once: true }}
-              className="glass-panel p-12 border-white/[0.03] group hover:border-white/10 transition-all duration-500"
+              className="card-earth border-earth-light/5 hover:border-moss-highlight/20 group relative overflow-hidden"
             >
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-12 rounded-2xl bg-white/[0.03] flex items-center justify-center text-white/40 group-hover:text-white transition-colors">
-                  <FaCheckCircle size={24} />
+              <div className="flex items-center gap-6 mb-10">
+                <div className="w-16 h-16 rounded-[1.5rem] bg-moss-highlight/5 flex items-center justify-center text-moss-highlight group-hover:bg-moss-highlight group-hover:text-black transition-all duration-700">
+                  <FaCheckCircle size={28} />
                 </div>
-                <h3 className="text-2xl">{work.title}</h3>
+                <h3 className="text-3xl text-earth-light">{work.title}</h3>
               </div>
-              <p className="text-gray-500 text-base leading-relaxed mb-8">
+              <p className="text-earth-light/40 text-lg leading-relaxed mb-12 italic">
                 {work.description}
               </p>
-              <div className="pt-8 border-t border-white/5">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-600 italic">
-                  Outcome: {work.result}
+              <div className="pt-10 border-t border-earth-light/5">
+                <p className="text-[10px] font-black uppercase tracking-[8px] text-moss-highlight/40 italic">
+                  Success Metrics: {work.result}
                 </p>
               </div>
+              
+              <div className="glow-spot -bottom-10 -right-10 w-32 h-32 bg-earth-primary/5 group-hover:bg-moss-highlight/5 transition-all duration-700" />
             </motion.div>
           ))}
         </div>
 
-        <div className="mt-24 text-center">
+        <div className="mt-32 text-center">
           <motion.a
             href="#contact"
             whileHover={{ scale: 1.05 }}
-            className="btn-primary inline-flex items-center gap-4"
+            className="btn-primary inline-flex items-center gap-6 shadow-[0_20px_50px_rgba(138,95,65,0.1)]"
           >
-            <FaHandshake /> Start a Collaboration
+            <FaHandshake size={20} /> Establish Connection
           </motion.a>
         </div>
       </div>
+      
+      {/* Background patterns */}
+      <div className="absolute top-0 right-0 w-full h-full opacity-[0.02] pointer-events-none -z-10 bg-[radial-gradient(#CCD67F_1px,transparent_1px)] [background-size:40px_40px]" />
     </section>
   );
 };

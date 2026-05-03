@@ -3,49 +3,47 @@ import { motion } from 'framer-motion';
 import { FaWhatsapp, FaEnvelope, FaGithub, FaLinkedin, FaPaperPlane } from 'react-icons/fa';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-
   return (
-    <section id="contact" className="py-32 px-6 bg-black relative">
+    <section id="contact" className="py-32 px-6 bg-dark-bg relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">
-          <div className="space-y-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-32">
+          <div className="space-y-16 relative">
             <div>
               <motion.span 
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                className="text-gray-500 text-xs font-bold uppercase tracking-[10px] mb-6 block"
+                className="text-moss-highlight text-xs font-black uppercase tracking-[15px] mb-8 block"
               >
-                Connect
+                Inquiries & Proposals
               </motion.span>
-              <h2 className="section-title mb-8 text-white">LET'S BUILD <br /> <span className="text-gray-500">TOGETHER</span></h2>
-              <p className="text-gray-400 text-xl leading-relaxed italic max-w-lg">
-                "Whether it's a complex system or a creative vision, I'm ready to bring it to life with purpose and precision."
+              <h2 className="section-title mb-10 text-earth-light leading-tight">LET'S BUILD <br /> <span className="text-earth-secondary/40">THE FUTURE</span></h2>
+              <p className="text-earth-light/40 text-2xl italic leading-relaxed max-w-lg border-l-4 border-moss-highlight/20 pl-10">
+                "Whether it's a revolutionary platform or a cinematic sanctuary, let's architect it with precision and purpose."
               </p>
             </div>
 
-            <div className="space-y-8">
-              <div className="flex items-center gap-6 group cursor-pointer">
-                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-gray-500 group-hover:text-white group-hover:border-white transition-all">
-                  <FaEnvelope />
+            <div className="space-y-10">
+              <div className="flex items-center gap-8 group cursor-pointer">
+                <div className="w-16 h-16 rounded-[1.5rem] bg-earth-primary/5 flex items-center justify-center text-earth-secondary group-hover:text-moss-highlight group-hover:bg-moss-highlight/5 transition-all duration-700">
+                  <FaEnvelope size={24} />
                 </div>
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-widest text-gray-600 mb-1">Email</p>
-                  <p className="text-white font-medium">mohammedali@example.com</p>
+                  <p className="text-[10px] font-black uppercase tracking-[8px] text-earth-secondary/40 mb-2">Electronic Mail</p>
+                  <p className="text-earth-light text-lg font-medium group-hover:text-moss-highlight transition-colors">mohammedali@example.com</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-6 group cursor-pointer" onClick={() => window.open('https://wa.me/9052404441')}>
-                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-gray-500 group-hover:text-white group-hover:border-white transition-all">
-                  <FaWhatsapp />
+              <div className="flex items-center gap-8 group cursor-pointer" onClick={() => window.open('https://wa.me/9052404441')}>
+                <div className="w-16 h-16 rounded-[1.5rem] bg-earth-primary/5 flex items-center justify-center text-earth-secondary group-hover:text-moss-highlight group-hover:bg-moss-highlight/5 transition-all duration-700">
+                  <FaWhatsapp size={24} />
                 </div>
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-widest text-gray-600 mb-1">WhatsApp</p>
-                  <p className="text-white font-medium">+91 9052404441</p>
+                  <p className="text-[10px] font-black uppercase tracking-[8px] text-earth-secondary/40 mb-2">Direct Messaging</p>
+                  <p className="text-earth-light text-lg font-medium group-hover:text-moss-highlight transition-colors">+91 9052404441</p>
                 </div>
               </div>
 
-              <div className="flex gap-6 pt-6">
+              <div className="flex gap-8 pt-10">
                 {[
                   { icon: <FaGithub />, link: "https://github.com/MohammedAli200" },
                   { icon: <FaLinkedin />, link: "https://www.linkedin.com/in/mohammed-ali-46a95a2b7/" }
@@ -55,47 +53,56 @@ const Contact = () => {
                     href={social.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:border-white transition-all"
+                    className="w-16 h-16 rounded-[1.5rem] bg-earth-primary/5 flex items-center justify-center text-earth-secondary hover:text-moss-highlight hover:bg-moss-highlight/5 hover:-translate-y-2 transition-all duration-700"
                   >
                     {social.icon}
                   </a>
                 ))}
               </div>
             </div>
+            
+            <div className="glow-spot -bottom-20 -left-20 w-96 h-96 bg-earth-primary/10 -z-10" />
           </div>
 
-          <div className="glass-panel p-12 border-white/[0.03]">
-            <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[5px] text-gray-600 ml-4">Full Name</label>
+          <div className="card-earth border-earth-light/5 p-16 relative bg-earth-primary/[0.03]">
+            <form className="space-y-12" onSubmit={(e) => e.preventDefault()}>
+              <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-[10px] text-earth-secondary/60 ml-6">Full Identity</label>
                 <input 
                   type="text" 
-                  className="w-full bg-white/[0.02] border border-white/5 rounded-2xl p-6 text-white focus:outline-none focus:border-white/20 transition-all"
-                  placeholder="Enter your name"
+                  className="w-full bg-dark-bg/50 border border-earth-light/5 rounded-[2rem] p-8 text-earth-light focus:outline-none focus:border-moss-highlight/30 transition-all text-lg placeholder:text-earth-light/10"
+                  placeholder="The name of your entity"
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[5px] text-gray-600 ml-4">Email Address</label>
+              <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-[10px] text-earth-secondary/60 ml-6">Digital Address</label>
                 <input 
                   type="email" 
-                  className="w-full bg-white/[0.02] border border-white/5 rounded-2xl p-6 text-white focus:outline-none focus:border-white/20 transition-all"
-                  placeholder="Enter your email"
+                  className="w-full bg-dark-bg/50 border border-earth-light/5 rounded-[2rem] p-8 text-earth-light focus:outline-none focus:border-moss-highlight/30 transition-all text-lg placeholder:text-earth-light/10"
+                  placeholder="Where can I reach you?"
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[5px] text-gray-600 ml-4">Message</label>
+              <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-[10px] text-earth-secondary/60 ml-6">Strategic Brief</label>
                 <textarea 
                   rows="5"
-                  className="w-full bg-white/[0.02] border border-white/5 rounded-2xl p-6 text-white focus:outline-none focus:border-white/20 transition-all resize-none"
-                  placeholder="Describe your vision"
+                  className="w-full bg-dark-bg/50 border border-earth-light/5 rounded-[2rem] p-8 text-earth-light focus:outline-none focus:border-moss-highlight/30 transition-all text-lg resize-none placeholder:text-earth-light/10"
+                  placeholder="Outline your vision..."
                 />
               </div>
-              <button className="btn-primary w-full flex items-center justify-center gap-4 py-6">
-                <FaPaperPlane /> Send Message
+              <button className="btn-primary w-full flex items-center justify-center gap-6 py-8 text-sm group">
+                <FaPaperPlane className="group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-500" /> Dispatch Signal
               </button>
             </form>
+            
+            <div className="glow-spot -top-20 -right-20 w-80 h-80 bg-moss-highlight/5 -z-10" />
           </div>
         </div>
+      </div>
+      
+      {/* Footer copyright style */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[9px] font-black uppercase tracking-[10px] text-earth-secondary/20 whitespace-nowrap">
+        © 2024 Mohammed Ali • Architectural Design
       </div>
     </section>
   );
