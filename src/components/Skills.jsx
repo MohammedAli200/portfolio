@@ -1,90 +1,88 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { 
   SiTailwindcss, SiBootstrap, SiExpress, SiMysql, SiMongodb 
 } from 'react-icons/si';
 import { 
   FaHtml5, FaCss3Alt, FaJsSquare, FaReact, FaNodeJs, FaGitAlt, FaGithub, FaJava, FaPython 
 } from 'react-icons/fa';
-import Magnetic from './Magnetic';
 
-const skills = [
-  { name: 'HTML5', icon: <FaHtml5 />, category: 'Frontend', level: 95 },
-  { name: 'CSS3', icon: <FaCss3Alt />, category: 'Frontend', level: 90 },
-  { name: 'JavaScript', icon: <FaJsSquare />, category: 'Frontend', level: 92 },
-  { name: 'React', icon: <FaReact />, category: 'Frontend', level: 88 },
-  { name: 'Tailwind', icon: <SiTailwindcss />, category: 'Frontend', level: 95 },
-  { name: 'Node.js', icon: <FaNodeJs />, category: 'Backend', level: 85 },
-  { name: 'Express', icon: <SiExpress />, category: 'Backend', level: 82 },
-  { name: 'MySQL', icon: <SiMysql />, category: 'Backend', level: 80 },
-  { name: 'MongoDB', icon: <SiMongodb />, category: 'Backend', level: 85 },
-  { name: 'Git', icon: <FaGitAlt />, category: 'Tools', level: 90 },
-  { name: 'Python', icon: <FaPython />, category: 'Backend', level: 75 },
+const skillCategories = [
+  {
+    name: "Frontend",
+    skills: [
+      { name: "HTML5", icon: <FaHtml5 /> },
+      { name: "CSS3", icon: <FaCss3Alt /> },
+      { name: "JavaScript", icon: <FaJsSquare /> },
+      { name: "React", icon: <FaReact /> },
+      { name: "Tailwind", icon: <SiTailwindcss /> },
+      { name: "Bootstrap", icon: <SiBootstrap /> },
+    ]
+  },
+  {
+    name: "Backend",
+    skills: [
+      { name: "Node.js", icon: <FaNodeJs /> },
+      { name: "Express", icon: <SiExpress /> },
+      { name: "MySQL", icon: <SiMysql /> },
+      { name: "MongoDB", icon: <SiMongodb /> },
+      { name: "Python", icon: <FaPython /> },
+      { name: "Java", icon: <FaJava /> },
+    ]
+  },
+  {
+    name: "Tools & Ecosystem",
+    skills: [
+      { name: "Git", icon: <FaGitAlt /> },
+      { name: "GitHub", icon: <FaGithub /> },
+    ]
+  }
 ];
-
-const FloatingOrb = ({ skill, index }) => {
-  return (
-    <Magnetic strength={1.2} repulsion={index % 2 === 0}>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        animate={{ 
-          y: [0, -15, 0],
-          x: [0, 10, 0],
-          rotate: [0, index % 2 === 0 ? 5 : -5, 0]
-        }}
-        transition={{
-          y: { duration: 4 + Math.random() * 2, repeat: Infinity, ease: "easeInOut" },
-          x: { duration: 3 + Math.random() * 2, repeat: Infinity, ease: "easeInOut" },
-          rotate: { duration: 5 + Math.random() * 2, repeat: Infinity, ease: "easeInOut" },
-          opacity: { duration: 1 },
-          scale: { duration: 0.5 }
-        }}
-        className="group relative"
-      >
-        <div className="glass-panel w-24 h-24 md:w-32 md:h-32 flex flex-col items-center justify-center gap-2 border-white/5 group-hover:border-neon-primary/50 group-hover:bg-neon-primary/10 transition-all duration-500">
-          <div className="text-3xl md:text-4xl group-hover:scale-125 transition-transform duration-500 text-white/70 group-hover:text-white">
-            {skill.icon}
-          </div>
-          <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500 group-hover:text-neon-primary opacity-0 group-hover:opacity-100 transition-opacity">
-            {skill.name}
-          </span>
-          
-          {/* Skill Level Glow */}
-          <div className="absolute inset-0 rounded-[2rem] bg-neon-primary/5 opacity-0 group-hover:opacity-100 blur-xl transition-opacity" />
-        </div>
-      </motion.div>
-    </Magnetic>
-  );
-};
 
 const Skills = () => {
   return (
-    <section id="skills" className="py-32 px-6 bg-black relative overflow-hidden">
+    <section id="skills" className="py-32 px-6 bg-black relative">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-24">
           <motion.span 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="text-accent text-xs font-bold uppercase tracking-[10px] mb-4 block"
+            className="text-[10px] uppercase font-bold tracking-[10px] text-gray-500 mb-6 block"
           >
-            Technical Ecosystem
+            Technical Stack
           </motion.span>
-          <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter">
-            ZERO <span className="gradient-text">GRAVITY</span> SKILLS
-          </h2>
+          <h2 className="section-title">SKILLS <span className="text-gray-500">& STACK</span></h2>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-8 md:gap-16 perspective-container">
-          {skills.map((skill, index) => (
-            <FloatingOrb key={skill.name} skill={skill} index={index} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {skillCategories.map((category, idx) => (
+            <motion.div
+              key={category.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              viewport={{ once: true }}
+              className="glass-panel p-10 border-white/[0.03]"
+            >
+              <h3 className="text-sm font-bold tracking-[5px] text-white/40 mb-10 uppercase border-b border-white/5 pb-4">
+                {category.name}
+              </h3>
+              <div className="grid grid-cols-2 gap-8">
+                {category.skills.map((skill) => (
+                  <div key={skill.name} className="flex flex-col items-center gap-4 group cursor-default">
+                    <div className="text-4xl text-gray-500 group-hover:text-white group-hover:scale-110 transition-all duration-300">
+                      {skill.icon}
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-600 group-hover:text-gray-400 transition-colors">
+                      {skill.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
-      
-      {/* Background Particles Decoration */}
-      <div className="absolute top-1/4 right-0 w-96 h-96 bg-neon-primary/5 blur-[100px] rounded-full" />
-      <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-neon-secondary/5 blur-[100px] rounded-full" />
     </section>
   );
 };

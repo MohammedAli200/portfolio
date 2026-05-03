@@ -1,120 +1,108 @@
-import React, { useState } from 'react';
+import React, { Suspense, useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Points, PointMaterial, Float } from '@react-three/drei';
+import * as random from 'maath/random/dist/maath-random.esm';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
-import { FaMicrophone, FaMicrophoneSlash } from 'react-icons/fa';
-import Magnetic from './Magnetic';
 
-const Hero = () => {
-  const [isListening, setIsListening] = useState(false);
-  const [voiceNote, setVoiceNote] = useState("");
+const ParticleField = () => {
+  const ref = useRef();
+  const sphere = random.inSphere(new Float32Array(3000), { radius: 1.5 });
 
-  const triggerAISpeech = (text) => {
-    window.dispatchEvent(new CustomEvent('ai-speak', { detail: text }));
-  };
-
-  const handleVoiceCommand = () => {
-    if (!('webkitSpeechRecognition' in window)) {
-      alert("Voice recognition not supported.");
-      return;
-    }
-    const recognition = new window.webkitSpeechRecognition();
-    recognition.lang = 'en-US';
-    recognition.start();
-    recognition.onstart = () => setIsListening(true);
-    recognition.onend = () => setIsListening(false);
-    recognition.onresult = (event) => {
-      const command = event.results[0][0].transcript.toLowerCase();
-      setVoiceNote(command);
-      
-      if (command.includes("journey") || command.includes("story")) {
-        triggerAISpeech("Navigating to my story. Let's look at the timeline.");
-        document.getElementById("about").scrollIntoView({ behavior: 'smooth' });
-      } else if (command.includes("project")) {
-        triggerAISpeech("Showing projects now.");
-        document.getElementById("projects").scrollIntoView({ behavior: 'smooth' });
-      } else if (command.includes("contact") || command.includes("hire")) {
-        triggerAISpeech("Establishment contact portal.");
-        document.getElementById("contact").scrollIntoView({ behavior: 'smooth' });
-      } else {
-        triggerAISpeech(`You said ${command}. I'm searching my database for that.`);
-      }
-    };
-  };
-
-  const startNarrative = () => {
-    // Explicitly resume audio context on user gesture
-    if (window.speechSynthesis.paused) window.speechSynthesis.resume();
-    triggerAISpeech("Welcome to my digital sanctuary. I'm Mohammed Ali, and this is my vision of the future. Let me guide you.");
-    document.getElementById("about").scrollIntoView({ behavior: 'smooth' });
-  };
+  useFrame((state, delta) => {
+    ref.current.rotation.x -= delta / 20;
+    ref.current.rotation.y -= delta / 30;
+  });
 
   return (
-    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-transparent">
-      {/* 
-          NOTE: The 3D Avatar is now rendered globally by AIGuide 
-          behind this content for an immersive depth effect.
-      */}
-      
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6">
-        <div className="flex flex-col items-center text-center">
-          <Magnetic strength={2}>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 50 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-              className="mb-8"
-            >
-              <h1 className="text-7xl md:text-[10rem] font-black leading-none tracking-tighter uppercase mb-4 text-white mix-blend-difference">
-                MOHAMMED <br /> <span className="gradient-text animate-pulse">ALI</span>
-              </h1>
-            </motion.div>
-          </Magnetic>
+    <group rotation={[0, 0, Math.PI / 4]}>
+      <Points ref={ref} positions={sphere} stride={3} frustumCulled={false}>
+        <PointMaterial
+          transparent
+          color="#ffffff"
+          size={0.002}
+          sizeAttenuation={true}
+          depthWrite={false}
+          opacity={0.3}
+        />
+      </Points>
+    </group>
+  );
+};
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="text-xl md:text-3xl font-medium mb-12 h-12 text-white/70"
+const Hero = () => {
+  return (
+    <section id="home" className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black">
+      {/* Background 3D */}
+      <div className="absolute inset-0 z-0">
+        <Canvas camera={{ position: [0, 0, 1] }}>
+          <Suspense fallback={null}>
+            <ParticleField />
+          </Suspense>
+        </Canvas>
+      </div>
+
+      {/* Hero Content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="space-y-6"
+        >
+          <motion.span 
+            initial={{ opacity: 0, letterSpacing: "20px" }}
+            animate={{ opacity: 1, letterSpacing: "8px" }}
+            transition={{ duration: 1.5 }}
+            className="text-[10px] uppercase font-bold text-gray-500 block"
           >
+            Full-Stack Developer | Freelancer
+          </motion.span>
+          
+          <h1 className="text-7xl md:text-[10rem] font-black leading-none tracking-tighter">
+            MOHAMMED <br />
+            <span className="text-gray-500">ALI</span>
+          </h1>
+
+          <div className="h-12 text-xl md:text-3xl text-gray-400 font-medium">
             <TypeAnimation
-              sequence={['Global Full-Stack Architect', 2000, 'AI Immersive Designer', 2000, 'Experience Builder', 2000]}
+              sequence={[
+                'Building digital products with purpose.',
+                2000,
+                'Architecting scalable full-stack systems.',
+                2000,
+                'Engineering cinematic web experiences.',
+                2000,
+              ]}
               wrapper="span"
               speed={50}
               repeat={Infinity}
             />
-          </motion.div>
-
-          <div className="flex flex-col md:flex-row gap-8 items-center">
-            <Magnetic strength={1.5}>
-              <motion.button
-                onClick={startNarrative}
-                whileHover={{ scale: 1.1 }}
-                className="neon-button text-sm px-12 py-5 shadow-[0_20px_50px_rgba(153,41,234,0.3)]"
-              >
-                Launch Experience
-              </motion.button>
-            </Magnetic>
-            
-            <motion.button
-              onClick={handleVoiceCommand}
-              whileHover={{ scale: 1.1 }}
-              className={`w-16 h-16 rounded-full flex items-center justify-center glass-panel border-white/10 ${isListening ? 'text-red-500 shadow-[0_0_20px_red]' : 'text-accent hover:border-accent/50'}`}
-            >
-              {isListening ? <FaMicrophoneSlash size={24} className="animate-pulse" /> : <FaMicrophone size={24} />}
-            </motion.button>
           </div>
-          
-          {voiceNote && (
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-6 text-[10px] text-accent font-bold uppercase tracking-[4px]">
-              " {voiceNote} "
-            </motion.p>
-          )}
-        </div>
+
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 1 }}
+            className="flex flex-col md:flex-row gap-6 items-center justify-center pt-12"
+          >
+            <a href="#projects" className="btn-primary">View Work</a>
+            <a href="/resume.pdf" className="btn-secondary" target="_blank">Download Resume</a>
+          </motion.div>
+        </motion.div>
       </div>
 
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20">
-        <motion.div animate={{ y: [0, 20, 0], opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 2 }} className="w-px h-16 bg-gradient-to-b from-white to-transparent" />
-      </div>
+      {/* Subtle Glows */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/[0.01] blur-[150px] rounded-full pointer-events-none" />
+      
+      {/* Scroll Hint */}
+      <motion.div 
+        animate={{ y: [0, 10, 0] }}
+        transition={{ repeat: Infinity, duration: 2 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[5px] text-gray-600"
+      >
+        Scroll to discover
+      </motion.div>
     </section>
   );
 };
