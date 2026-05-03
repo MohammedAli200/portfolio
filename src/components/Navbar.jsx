@@ -33,9 +33,9 @@ const Navbar = () => {
           href="#home"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-2xl font-bold gradient-text"
+          className="text-xl font-black gradient-text tracking-tighter"
         >
-          MA.
+          MOHAMMED ALI
         </motion.a>
 
         {/* Desktop Menu */}

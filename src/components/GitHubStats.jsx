@@ -12,9 +12,9 @@ const GitHubStats = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-bold mb-16"
+          className="text-5xl font-black mb-16 uppercase tracking-tighter"
         >
-          GitHub <span className="gradient-text">Statistics</span>
+          GitHub <span className="gradient-text">Activity</span>
         </motion.h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 justify-items-center">
