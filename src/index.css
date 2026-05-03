@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --color-dark-bg: #0a0a0a;
+  --color-neon-primary: #00f3ff;
+  --color-neon-secondary: #ff00ff;
+  --color-glass: rgba(255, 255, 255, 0.05);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+}
+
+@layer base {
+  body {
+    @apply bg-[var(--color-dark-bg)] text-white font-sans antialiased overflow-x-hidden;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-[var(--color-glass)] backdrop-blur-md border border-[var(--color-glass-border)] rounded-2xl;
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 10px var(--color-neon-primary), 0 0 20px var(--color-neon-primary);
+  }
+  
+  .text-glow-secondary {
+    text-shadow: 0 0 10px var(--color-neon-secondary), 0 0 20px var(--color-neon-secondary);
+  }
+  
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-neon-primary)] to-[var(--color-neon-secondary)];
+  }
+
+  .neon-button {
+    @apply relative px-6 py-3 font-semibold text-white rounded-lg overflow-hidden transition-all duration-300;
+    background: var(--color-glass);
+    border: 1px solid var(--color-glass-border);
+  }
+
+  .neon-button:hover {
+    box-shadow: 0 0 15px var(--color-neon-primary);
+    border-color: var(--color-neon-primary);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neon-primary);
+}
