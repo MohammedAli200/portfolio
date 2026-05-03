@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { Routes, Route } from 'react-router-dom';
 import Lenis from 'lenis';
+
+// Components
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -13,8 +15,8 @@ import GitHubStats from './components/GitHubStats';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
-import Avatar from './components/Avatar';
 import AdminDashboard from './components/AdminDashboard';
+import AIGuide from './components/AIGuide';
 import { AnalyticsProvider } from './components/AnalyticsProvider';
 
 const PageLoader = () => (
@@ -42,8 +44,6 @@ const PageLoader = () => (
   </motion.div>
 );
 
-import AIGuide from './components/AIGuide';
-
 const MainSite = () => {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
@@ -51,13 +51,11 @@ const MainSite = () => {
   return (
     <>
       <CustomCursor />
-      
       <AIGuide />
-
       <motion.div className="fixed top-0 left-0 right-0 h-[2px] bg-accent z-[100] origin-left" style={{ scaleX }} />
       <Navbar />
       
-      <main>
+      <main className="relative z-10">
         <div id="home"><Hero /></div>
         <About />
         <Skills />

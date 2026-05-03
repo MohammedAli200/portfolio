@@ -1,68 +1,70 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { Float, Sphere, MeshDistortMaterial, MeshWobbleMaterial } from '@react-three/drei';
+import React, { useRef, useEffect, useMemo, useState } from 'react';
+import { useFrame, useGraph } from '@react-three/fiber';
+import { useGLTF, useAnimations } from '@react-three/drei';
 import * as THREE from 'three';
+import { SkeletonUtils } from 'three-stdlib';
 
-const Avatar = ({ isSpeaking }) => {
-  const headRef = useRef();
-  const leftEyeRef = useRef();
-  const rightEyeRef = useRef();
+// A high-quality public GLB model of a stylized developer character
+const MODEL_URL = "https://models.readyplayer.me/6485ec93e038933391d4e414.glb";
+
+const Avatar = ({ isSpeaking, ...props }) => {
+  const group = useRef();
+  const { scene, animations } = useGLTF(MODEL_URL);
+  
+  // Clone the scene to avoid issues with multiple instances
+  const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
+  const { nodes, materials } = useGraph(clone);
+  
+  const { actions, names } = useAnimations(animations, group);
+  const [currentAction, setCurrentAction] = useState("Idle");
+
+  useEffect(() => {
+    // Basic animation handling
+    if (actions && actions["Idle"]) {
+      actions["Idle"].fadeIn(0.5).play();
+    }
+    
+    // If speaking, maybe add a slight gesture or jaw movement (if rigged)
+    if (isSpeaking && actions["Talking"]) {
+      actions["Idle"].fadeOut(0.5);
+      actions["Talking"].reset().fadeIn(0.5).play();
+    } else if (actions["Talking"]) {
+      actions["Talking"].fadeOut(0.5);
+      actions["Idle"].reset().fadeIn(0.5).play();
+    }
+  }, [isSpeaking, actions]);
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
-    if (headRef.current) {
-      headRef.current.rotation.y = Math.sin(time * 0.5) * 0.2;
-      headRef.current.position.y = Math.sin(time * 2) * 0.05;
-    }
     
-    if (leftEyeRef.current && rightEyeRef.current) {
-      const targetScale = isSpeaking ? 1 + Math.abs(Math.sin(time * 15)) * 0.5 : 1;
-      leftEyeRef.current.scale.y = THREE.MathUtils.lerp(leftEyeRef.current.scale.y, targetScale, 0.1);
-      rightEyeRef.current.scale.y = THREE.MathUtils.lerp(rightEyeRef.current.scale.y, targetScale, 0.1);
+    // Smoothly follow the mouse with the head
+    if (nodes.Head) {
+      const targetRotation = new THREE.Euler(
+        state.mouse.y * -0.2,
+        state.mouse.x * 0.2,
+        0
+      );
+      nodes.Head.rotation.set(
+        THREE.MathUtils.lerp(nodes.Head.rotation.x, targetRotation.x, 0.1),
+        THREE.MathUtils.lerp(nodes.Head.rotation.y, targetRotation.y, 0.1),
+        0
+      );
+    }
+
+    // Floating drift effect (Antigravity)
+    if (group.current) {
+      group.current.position.y = Math.sin(time) * 0.05;
     }
   });
 
   return (
-    <group position={[0, 0, 0]}>
-      <Float speed={3} rotationIntensity={0.5} floatIntensity={0.5}>
-        <mesh ref={headRef}>
-          <Sphere args={[1, 64, 64]}>
-            <MeshDistortMaterial
-              color="#9929EA"
-              distort={0.4}
-              speed={2}
-              roughness={0}
-              metalness={1}
-              transparent
-              opacity={0.9}
-            />
-          </Sphere>
-          <mesh ref={leftEyeRef} position={[-0.4, 0.2, 0.8]}>
-            <Sphere args={[0.1, 32, 32]}>
-              <meshStandardMaterial color="#FAEB92" emissive="#FAEB92" emissiveIntensity={2} />
-            </Sphere>
-          </mesh>
-          <mesh ref={rightEyeRef} position={[0.4, 0.2, 0.8]}>
-            <Sphere args={[0.1, 32, 32]}>
-              <meshStandardMaterial color="#FAEB92" emissive="#FAEB92" emissiveIntensity={2} />
-            </Sphere>
-          </mesh>
-          <mesh position={[0, -0.4, 0.8]}>
-            <boxGeometry args={[0.5, 0.05, 0.1]} />
-            <meshStandardMaterial 
-              color="#CC66DA" 
-              emissive="#CC66DA" 
-              emissiveIntensity={isSpeaking ? 10 : 1} 
-            />
-          </mesh>
-        </mesh>
-        <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[1.6, 0.01, 16, 100]} />
-          <MeshWobbleMaterial color="#FAEB92" speed={2} factor={0.5} />
-        </mesh>
-      </Float>
+    <group ref={group} {...props} dispose={null}>
+      <primitive object={clone} />
     </group>
   );
 };
 
 export default Avatar;
+
+// Preload the model for performance
+useGLTF.preload(MODEL_URL);
