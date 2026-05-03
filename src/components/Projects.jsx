@@ -9,7 +9,7 @@ const projects = [
     description: 'An intelligent platform leveraging Gemini AI and Firebase for real-time data processing and user interaction.',
     tech: ['React', 'Gemini AI', 'Firebase', 'Tailwind'],
     image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1000', // Using unsplash for placeholders
-    github: '#',
+    github: 'https://github.com/MohammedAli200',
     demo: '#'
   },
   {
@@ -17,7 +17,7 @@ const projects = [
     description: 'A cinematic, high-performance portfolio website for a professional photographer showcasing visual arts.',
     tech: ['React', 'Framer Motion', 'Vanilla CSS'],
     image: 'https://images.unsplash.com/photo-1452581764120-0433290680dc?auto=format&fit=crop&q=80&w=1000',
-    github: '#',
+    github: 'https://github.com/MohammedAli200',
     demo: '#'
   },
   {
@@ -25,7 +25,7 @@ const projects = [
     description: 'A comprehensive educational portal for institutional management and student resources (In Progress).',
     tech: ['React', 'Node.js', 'MongoDB', 'Express'],
     image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80&w=1000',
-    github: '#',
+    github: 'https://github.com/MohammedAli200',
     demo: '#'
   },
 ];

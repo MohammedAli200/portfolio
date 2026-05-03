@@ -46,7 +46,7 @@ const Hero = () => {
           <h1 className="text-5xl md:text-7xl font-bold mb-4">
             Hi, I'm <span className="gradient-text">Mohammed Ali</span>
           </h1>
-          
+
           <div className="text-xl md:text-3xl font-medium mb-8 h-12">
             <TypeAnimation
               sequence={[
@@ -93,7 +93,7 @@ const Hero = () => {
           transition={{ delay: 2, duration: 1 }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
-          <span className="text-sm text-gray-500 uppercase tracking-widest">Scroll</span>
+          {/* <span className="text-sm text-gray-500 uppercase tracking-widest">Scroll</span> */}
           <div className="w-6 h-10 border-2 border-gray-500 rounded-full flex justify-center p-1">
             <motion.div
               animate={{ y: [0, 12, 0] }}

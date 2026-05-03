@@ -38,14 +38,14 @@ const Contact = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500 uppercase tracking-widest">WhatsApp</p>
-                <p className="text-xl font-medium">+91 00000 00000</p>
+                <p className="text-xl font-medium">+91 90524 04441</p>
               </div>
             </div>
           </div>
 
           <div className="flex gap-4">
-            <a href="#" className="p-4 glass-panel text-2xl hover:text-neon-primary transition-colors"><FaGithub /></a>
-            <a href="#" className="p-4 glass-panel text-2xl hover:text-neon-secondary transition-colors"><FaLinkedin /></a>
+            <a href="https://github.com/MohammedAli200" target="_blank" rel="noopener noreferrer" className="p-4 glass-panel text-2xl hover:text-neon-primary transition-colors"><FaGithub /></a>
+            <a href="https://www.linkedin.com/in/mohammed-ali-46a95a2b7/" target="_blank" rel="noopener noreferrer" className="p-4 glass-panel text-2xl hover:text-neon-secondary transition-colors"><FaLinkedin /></a>
           </div>
 
           {/* Resume Section */}

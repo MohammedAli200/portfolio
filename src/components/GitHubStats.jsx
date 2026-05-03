@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const GitHubStats = () => {
-  const username = 'mohammedali'; // Placeholder as mentioned in the plan
+  const username = 'MohammedAli200'; // Updated from user request
 
   return (
     <section className="py-24 px-6 bg-black/50">

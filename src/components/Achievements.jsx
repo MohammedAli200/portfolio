@@ -118,7 +118,8 @@ const Achievements = () => {
               </ul>
 
               <motion.a
-                href="https://wa.me/your-number" // Placeholder
+                href="https://wa.me/919052404441"
+                target="_blank" rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="neon-button inline-block w-full text-center"
