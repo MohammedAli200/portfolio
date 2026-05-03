@@ -7,12 +7,13 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
+import Freelance from './components/Freelance';
 import Achievements from './components/Achievements';
 import GitHubStats from './components/GitHubStats';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
-import AIAssistant from './components/AIAssistant';
+import Avatar from './components/Avatar';
 import AdminDashboard from './components/AdminDashboard';
 import { AnalyticsProvider } from './components/AnalyticsProvider';
 
@@ -36,7 +37,7 @@ const PageLoader = () => (
       animate={{ opacity: 1, letterSpacing: "5px" }}
       className="text-white font-black uppercase text-[10px] tracking-[10px]"
     >
-      NEURAL LINK ESTABLISHED
+      EXPERIENCE INITIALIZING
     </motion.div>
   </motion.div>
 );
@@ -48,18 +49,28 @@ const MainSite = () => {
   return (
     <>
       <CustomCursor />
-      <AIAssistant />
+      
+      {/* Global AI Avatar Guide */}
+      <div className="fixed bottom-10 right-10 w-40 h-40 z-[150] pointer-events-none">
+        <div className="w-full h-full pointer-events-auto">
+          <Avatar />
+        </div>
+      </div>
+
       <motion.div className="fixed top-0 left-0 right-0 h-[2px] bg-accent z-[100] origin-left" style={{ scaleX }} />
       <Navbar />
+      
       <main>
         <div id="home"><Hero /></div>
         <About />
         <Skills />
         <Projects />
+        <Freelance />
         <Achievements />
         <GitHubStats />
         <Contact />
       </main>
+      
       <Footer />
     </>
   );
@@ -70,15 +81,9 @@ function App() {
   const [ripples, setRipples] = useState([]);
 
   const addRipple = (e) => {
-    const newRipple = {
-      id: Date.now(),
-      x: e.clientX,
-      y: e.clientY
-    };
+    const newRipple = { id: Date.now(), x: e.clientX, y: e.clientY };
     setRipples(prev => [...prev, newRipple]);
-    setTimeout(() => {
-      setRipples(prev => prev.filter(r => r.id !== newRipple.id));
-    }, 1000);
+    setTimeout(() => setRipples(prev => prev.filter(r => r.id !== newRipple.id)), 1000);
   };
 
   useEffect(() => {
@@ -128,6 +133,7 @@ function App() {
             ))}
           </AnimatePresence>
         </div>
+
         <AnimatePresence>
           {isLoading && <PageLoader />}
         </AnimatePresence>
