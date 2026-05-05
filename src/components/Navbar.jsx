@@ -1,105 +1,82 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiMenuAlt3, HiX } from 'react-icons/hi';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 const navLinks = [
   { name: 'Home', href: '#home' },
-  { name: 'About', href: '#about' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Projects', href: '#projects' },
+  { name: 'Narrative', href: '#about' },
+  { name: 'Gallery', href: '#projects' },
+  { name: 'Record', href: '#experience' },
   { name: 'Contact', href: '#contact' },
 ];
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-black/80 backdrop-blur-lg border-b border-white/10 py-4' : 'bg-transparent py-6'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <motion.a
-          href="#home"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="text-xl font-black gradient-text tracking-tighter"
-        >
-          MOHAMMED ALI
-        </motion.a>
+    <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${isScrolled ? 'py-4' : 'py-8'}`}>
+      <div className="max-w-7xl mx-auto px-6">
+        <div className={`flex items-center justify-between px-8 py-4 rounded-full transition-all duration-500 ${isScrolled ? 'bg-white/80 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.03)] border border-black/5' : 'bg-transparent'}`}>
+          
+          {/* Brand */}
+          <a href="#home" className="text-xl font-black tracking-tighter text-text-primary group">
+            MOHAMMED <span className="text-earth-primary group-hover:text-text-primary transition-colors">ALI</span>
+          </a>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link, i) => (
-            <motion.a
-              key={link.name}
-              href={link.href}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              className="text-sm font-medium text-gray-300 hover:text-accent transition-colors"
-            >
-              {link.name}
-            </motion.a>
-          ))}
-          <motion.a
-            href="#resume"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="neon-button text-xs py-2 px-4"
-          >
-            Resume
-          </motion.a>
-        </div>
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-10">
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href}
+                className="text-[10px] font-black uppercase tracking-[5px] text-text-secondary/60 hover:text-earth-primary transition-colors relative group"
+              >
+                {link.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-earth-primary transition-all duration-500 group-hover:w-full" />
+              </a>
+            ))}
+            <a href="#contact" className="px-6 py-2 bg-text-primary text-white text-[10px] font-black uppercase tracking-[4px] rounded-full hover:bg-earth-primary transition-colors shadow-sm">
+              Connect
+            </a>
+          </div>
 
-        {/* Mobile Toggle */}
-        <div className="md:hidden">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-3xl text-white"
+          {/* Mobile Toggle */}
+          <button 
+            className="md:hidden text-text-primary text-2xl"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isOpen ? <HiX /> : <HiMenuAlt3 />}
+            {isMenuOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       <AnimatePresence>
-        {isOpen && (
+        {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-black/95 backdrop-blur-xl border-b border-white/10 overflow-hidden"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-full left-0 w-full bg-white/95 backdrop-blur-3xl border-t border-black/5 p-10 md:hidden shadow-2xl"
           >
-            <div className="flex flex-col p-6 gap-6">
+            <div className="flex flex-col gap-8 text-center">
               {navLinks.map((link) => (
-                <a
-                  key={link.name}
+                <a 
+                  key={link.name} 
                   href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-xl font-medium text-gray-300 hover:text-neon-primary transition-colors"
+                  className="text-lg font-bold text-text-secondary hover:text-earth-primary transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   {link.name}
                 </a>
               ))}
-              <a
-                href="#resume"
-                onClick={() => setIsOpen(false)}
-                className="neon-button text-center"
-              >
-                Resume
-              </a>
             </div>
           </motion.div>
         )}

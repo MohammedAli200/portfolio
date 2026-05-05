@@ -1,52 +1,70 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const strongBlocks = [
+const narrativeBlocks = [
   {
-    title: "Who I Am",
-    content: "I am a Full-Stack Developer with a deep-seated passion for architectural precision and user-centric design. I specialize in turning complex problems into elegant, scalable digital solutions.",
-    label: "Identity"
+    title: "The Introduction",
+    content: "I am a Full-Stack Developer driven by the intersection of engineering and design. I focus on building digital products that are as performant as they are aesthetically refined.",
+    label: "01 Identity"
   },
   {
-    title: "What I’ve Done",
-    content: "Architected 20+ frontend projects, delivered professional freelance solutions (Photography Hub), and completed a Full Stack Residency at Infosys Springboard 6.0.",
-    label: "Experience"
+    title: "Accelerated Growth",
+    content: "Having architected 20+ frontend and full-stack projects, I've developed a rigorous methodology for rapid delivery without compromising on architectural integrity.",
+    label: "02 Experience"
   },
   {
-    title: "What I’m Doing Now",
-    content: "Currently engineering an institutional college portal while exploring the frontiers of AI integration and high-performance web systems.",
-    label: "Vision"
+    title: "Market Impact",
+    content: "From completing a Full Stack Residency at Infosys Springboard 6.0 to delivering commercial-grade photography portfolios, I bring corporate standards to freelance projects.",
+    label: "03 Track Record"
+  },
+  {
+    title: "The Present Focus",
+    content: "Currently engineering an institutional college portal while exploring the frontiers of AI-driven interfaces and high-performance web systems.",
+    label: "04 Vision"
   }
 ];
 
 const About = () => {
   return (
-    <section id="about" className="py-32 px-6 bg-dark-bg relative overflow-hidden">
+    <section id="about" className="py-40 px-6 bg-light-bg relative">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-24">
-          <span className="section-label">A Brief Overview</span>
-          <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-earth-light">THE <span className="text-moss-highlight/60">NARRATIVE</span></h2>
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
+          
+          {/* Header Block */}
+          <div className="lg:col-span-4 sticky top-40 h-fit">
+            <span className="section-label-light">The Narrative</span>
+            <h2 className="text-[4rem] md:text-[5rem] font-bold leading-tight mb-8">A Journey of <span className="text-earth-primary/50">Purpose.</span></h2>
+            <div className="h-1 w-20 bg-earth-primary/20" />
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {strongBlocks.map((block, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.8 }}
-              viewport={{ once: true }}
-              className="premium-card p-12 space-y-8"
-            >
-              <span className="text-[10px] font-bold tracking-[6px] text-earth-secondary/40 uppercase block">{block.label}</span>
-              <h3 className="text-3xl font-bold text-earth-light">{block.title}</h3>
-              <p className="text-earth-light/50 text-lg leading-relaxed font-medium">
-                {block.content}
-              </p>
-            </motion.div>
-          ))}
+          {/* Narrative Content */}
+          <div className="lg:col-span-8 space-y-32">
+            {narrativeBlocks.map((block, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="space-y-8 max-w-2xl"
+              >
+                <span className="text-[11px] font-black uppercase tracking-[10px] text-earth-secondary/40 block">
+                  {block.label}
+                </span>
+                <h3 className="text-4xl md:text-5xl font-bold text-text-primary">
+                  {block.title}
+                </h3>
+                <p className="text-2xl text-text-secondary leading-relaxed font-medium">
+                  {block.content}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
+      
+      {/* Background Contrast Block */}
+      <div className="absolute top-0 right-0 w-1/3 h-full bg-light-contrast/30 -z-10" />
     </section>
   );
 };

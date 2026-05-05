@@ -1,55 +1,50 @@
 @import "tailwindcss";
 
 @theme {
-  --color-dark-bg: #0f0f0f;
+  --color-light-bg: #F9F6F1;
+  --color-light-contrast: #F3E4C9;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #5a4a3f;
   --color-earth-primary: #8A5F41;
   --color-earth-secondary: #A77F60;
-  --color-earth-light: #F3E4C9;
   --color-moss-highlight: #CCD67F;
-  --color-glass: rgba(138, 95, 65, 0.05);
-  --color-glass-border: rgba(243, 228, 201, 0.05);
 }
 
 @layer base {
   body {
-    @apply bg-dark-bg text-earth-light font-sans antialiased overflow-x-hidden selection:bg-moss-highlight selection:text-black;
+    @apply bg-light-bg text-text-primary font-sans antialiased overflow-x-hidden selection:bg-earth-primary/20 selection:text-earth-primary;
     scrollbar-width: thin;
-    scrollbar-color: #333 transparent;
+    scrollbar-color: #d1d1d1 transparent;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight text-earth-light;
+    @apply font-bold tracking-tight text-text-primary;
   }
 }
 
 @layer components {
-  .premium-card {
-    @apply bg-earth-primary/[0.03] border border-white/[0.03] rounded-3xl transition-all duration-700 hover:border-white/[0.1] hover:bg-earth-primary/[0.05];
+  .editorial-card {
+    @apply bg-white border border-black/5 rounded-2xl transition-all duration-700 hover:shadow-[0_15px_35px_rgba(0,0,0,0.05)] hover:-translate-y-1;
   }
 
-  .section-label {
-    @apply text-[10px] uppercase font-bold tracking-[8px] text-moss-highlight/60 mb-6 block;
+  .section-label-light {
+    @apply text-[10px] uppercase font-bold tracking-[6px] text-earth-primary/60 mb-6 block;
   }
 
-  .btn-premium {
-    @apply px-8 py-4 bg-earth-light text-black font-bold text-sm rounded-full transition-all duration-500 hover:scale-105 hover:shadow-xl active:scale-95;
+  .btn-editorial {
+    @apply px-10 py-4 bg-earth-primary text-white font-bold text-sm rounded-full transition-all duration-500 hover:scale-105 active:scale-95 shadow-sm hover:shadow-lg;
   }
 
-  .btn-outline-premium {
-    @apply px-8 py-4 border border-earth-light/20 text-earth-light font-bold text-sm rounded-full transition-all duration-500 hover:bg-earth-light/10;
+  .btn-outline-editorial {
+    @apply px-10 py-4 border border-earth-primary/20 text-earth-primary font-bold text-sm rounded-full transition-all duration-500 hover:bg-earth-primary/5;
+  }
+
+  .glass-light {
+    @apply bg-white/40 backdrop-blur-md border border-black/5;
   }
 }
 
-@keyframes slowFadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-up {
-  animation: slowFadeUp 1s ease-out forwards;
-}
-
-/* Custom Scrollbar for cleaner look */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -57,9 +52,13 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #222;
+  background: #e1e1e1;
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #333;
+  background: #d1d1d1;
+}
+
+.bg-texture {
+  background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
 }
