@@ -10,6 +10,7 @@ import About from './components/About';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
 import GitHubStats from './components/GitHubStats';
+import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
@@ -21,20 +22,20 @@ const PageLoader = () => (
     initial={{ opacity: 1 }}
     exit={{ opacity: 0 }}
     transition={{ duration: 1, ease: "easeInOut" }}
-    className="fixed inset-0 z-[1000] bg-[#0f0f0f] flex flex-col items-center justify-center"
+    className="fixed inset-0 z-[1000] bg-[#F9F6F1] flex flex-col items-center justify-center"
   >
-    <div className="relative w-24 h-[1px] bg-white/10 overflow-hidden mb-6">
+    <div className="relative w-24 h-[1px] bg-black/10 overflow-hidden mb-6">
       <motion.div
         initial={{ left: "-100%" }}
         animate={{ left: "100%" }}
         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-        className="absolute w-full h-full bg-earth-light"
+        className="absolute w-full h-full bg-earth-primary"
       />
     </div>
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="text-earth-light/40 font-bold uppercase text-[9px] tracking-[10px]"
+      className="text-earth-primary/40 font-bold uppercase text-[9px] tracking-[10px]"
     >
       Initializing Portfolio
     </motion.div>
@@ -50,6 +51,7 @@ const MainSite = () => {
         <Hero />
         <About />
         <Projects />
+        <Skills />
         <Experience />
         <GitHubStats />
         <Contact />
@@ -79,7 +81,7 @@ function App() {
 
   return (
     <AnalyticsProvider>
-      <div className="relative bg-[#0f0f0f] min-h-screen selection:bg-moss-highlight selection:text-black overflow-x-hidden">
+      <div className="relative bg-[#F9F6F1] min-h-screen selection:bg-earth-primary/20 selection:text-earth-primary overflow-x-hidden">
         <AnimatePresence mode="wait">
           {isLoading && <PageLoader key="loader" />}
         </AnimatePresence>
