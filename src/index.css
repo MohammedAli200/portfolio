@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-dark-bg: #0f0f0f;
+  --color-dark-bg: #0B0B0B;
   --color-earth-primary: #8A5F41;
   --color-earth-secondary: #A77F60;
   --color-earth-light: #F3E4C9;
   --color-moss-highlight: #CCD67F;
-  --color-glass: rgba(138, 95, 65, 0.15);
-  --color-glass-border: rgba(243, 228, 201, 0.1);
+  --color-glass: rgba(138, 95, 65, 0.1);
+  --color-glass-border: rgba(243, 228, 201, 0.05);
 }
 
 @layer base {
@@ -26,42 +26,56 @@
 }
 
 @layer components {
-  .glass-panel {
-    @apply bg-earth-primary/10 backdrop-blur-3xl border border-white/5 rounded-[2rem] transition-all duration-500 shadow-2xl;
+  .luxury-panel {
+    @apply bg-earth-primary/[0.03] backdrop-blur-3xl border border-white/[0.05] rounded-[3rem] transition-all duration-700 shadow-[0_50px_100px_rgba(0,0,0,0.5)];
   }
 
-  .section-title {
-    @apply text-5xl md:text-8xl mb-16;
+  .section-title-huge {
+    @apply text-[10rem] md:text-[18rem] leading-[0.8] tracking-tighter uppercase font-black opacity-10 select-none pointer-events-none absolute -left-10;
   }
 
-  .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-earth-light via-earth-secondary to-moss-highlight;
+  .gradient-text-luxury {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-earth-light via-moss-highlight to-earth-secondary;
+    background-size: 200% auto;
+    animation: textGradient 5s linear infinite;
   }
 
-  .btn-primary {
-    @apply relative px-10 py-5 bg-moss-highlight text-black font-black uppercase tracking-[4px] text-[10px] rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(204,214,127,0.4)];
+  .btn-magnetic {
+    @apply relative px-12 py-6 bg-moss-highlight text-black font-black uppercase tracking-[6px] text-[11px] rounded-full overflow-hidden transition-all duration-500 hover:scale-110 hover:shadow-[0_0_50px_rgba(204,214,127,0.5)] active:scale-95;
   }
 
-  .btn-secondary {
-    @apply relative px-10 py-5 border border-moss-highlight/30 text-moss-highlight font-black uppercase tracking-[4px] text-[10px] rounded-full overflow-hidden transition-all duration-300 hover:bg-moss-highlight/10 hover:border-moss-highlight;
-  }
-
-  .card-earth {
-    @apply bg-earth-primary/10 border border-earth-primary/20 rounded-[2.5rem] p-10 hover:border-moss-highlight/30 transition-all duration-500;
+  .btn-outline-luxury {
+    @apply relative px-12 py-6 border border-earth-light/20 text-earth-light font-black uppercase tracking-[6px] text-[11px] rounded-full overflow-hidden transition-all duration-500 hover:bg-earth-light hover:text-black;
   }
 }
 
-/* Float Animation */
-@keyframes float {
+@keyframes textGradient {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes float-slow {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(1deg); }
+  50% { transform: translateY(-30px) rotate(2deg); }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+.animate-float-luxury {
+  animation: float-slow 10s ease-in-out infinite;
 }
 
-/* Glow Decoration */
-.glow-spot {
-  @apply absolute rounded-full blur-[120px] pointer-events-none;
+/* Mask Reveal Utility */
+.mask-reveal {
+  mask-image: linear-gradient(to right, black 50%, transparent 50%);
+  mask-size: 200% 100%;
+  mask-position: 100% 0;
+  transition: mask-position 1s ease-out;
+}
+
+.mask-reveal:hover {
+  mask-position: 0 0;
+}
+
+/* Spotlight Effect */
+.spotlight {
+  background: radial-gradient(circle at var(--x) var(--y), rgba(204,214,127,0.15) 0%, transparent 50%);
 }
