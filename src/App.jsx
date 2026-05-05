@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Routes, Route } from 'react-router-dom';
 import Lenis from 'lenis';
 
@@ -7,10 +7,8 @@ import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
-import Skills from './components/Skills';
+import Experience from './components/Experience';
 import Projects from './components/Projects';
-import Freelance from './components/Freelance';
-import Achievements from './components/Achievements';
 import GitHubStats from './components/GitHubStats';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -23,50 +21,39 @@ const PageLoader = () => (
     initial={{ opacity: 1 }}
     exit={{ opacity: 0 }}
     transition={{ duration: 1, ease: "easeInOut" }}
-    className="fixed inset-0 z-[1000] bg-black flex flex-col items-center justify-center"
+    className="fixed inset-0 z-[1000] bg-[#0f0f0f] flex flex-col items-center justify-center"
   >
-    <div className="relative w-48 h-[1px] bg-white/10 overflow-hidden mb-6">
+    <div className="relative w-24 h-[1px] bg-white/10 overflow-hidden mb-6">
       <motion.div
         initial={{ left: "-100%" }}
         animate={{ left: "100%" }}
         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-        className="absolute w-full h-full bg-white"
+        className="absolute w-full h-full bg-earth-light"
       />
     </div>
     <motion.div 
-      initial={{ opacity: 0, letterSpacing: "20px" }}
-      animate={{ opacity: 1, letterSpacing: "5px" }}
-      className="text-white font-black uppercase text-[10px] tracking-[10px]"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="text-earth-light/40 font-bold uppercase text-[9px] tracking-[10px]"
     >
-      PORTFOLIO INITIALIZING
+      Initializing Portfolio
     </motion.div>
   </motion.div>
 );
 
 const MainSite = () => {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
-
   return (
     <>
       <CustomCursor />
-      
-      {/* Scroll Progress Bar */}
-      <motion.div className="fixed top-0 left-0 right-0 h-[1px] bg-white z-[100] origin-left" style={{ scaleX }} />
-      
       <Navbar />
-      
       <main>
         <Hero />
         <About />
-        <Skills />
         <Projects />
-        <Freelance />
-        <Achievements />
+        <Experience />
         <GitHubStats />
         <Contact />
       </main>
-      
       <Footer />
     </>
   );
@@ -77,13 +64,13 @@ function App() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.05,
+      lerp: 0.1,
       smoothWheel: true,
     });
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
 
-    const timer = setTimeout(() => setIsLoading(false), 2500);
+    const timer = setTimeout(() => setIsLoading(false), 2000);
     return () => { 
       lenis.destroy(); 
       clearTimeout(timer);
@@ -92,9 +79,9 @@ function App() {
 
   return (
     <AnalyticsProvider>
-      <div className="relative bg-black min-h-screen selection:bg-white selection:text-black overflow-x-hidden">
-        <AnimatePresence>
-          {isLoading && <PageLoader />}
+      <div className="relative bg-[#0f0f0f] min-h-screen selection:bg-moss-highlight selection:text-black overflow-x-hidden">
+        <AnimatePresence mode="wait">
+          {isLoading && <PageLoader key="loader" />}
         </AnimatePresence>
 
         {!isLoading && (

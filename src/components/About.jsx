@@ -1,102 +1,52 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 
-const chapters = [
+const strongBlocks = [
   {
-    id: "01",
-    title: "CURIOSITY",
-    subtitle: "The Genesis",
-    content: "Started experimenting with the core DNA of the web—HTML, CSS, and JavaScript. Understanding how bits and pixels weave digital reality.",
-    theme: "#8A5F41"
+    title: "Who I Am",
+    content: "I am a Full-Stack Developer with a deep-seated passion for architectural precision and user-centric design. I specialize in turning complex problems into elegant, scalable digital solutions.",
+    label: "Identity"
   },
   {
-    id: "02",
-    title: "GROWTH",
-    subtitle: "The Evolution",
-    content: "Architected 20+ specialized projects, evolving into a full-stack engineer capable of bridging vision and functionality.",
-    theme: "#CCD67F"
+    title: "What I’ve Done",
+    content: "Architected 20+ frontend projects, delivered professional freelance solutions (Photography Hub), and completed a Full Stack Residency at Infosys Springboard 6.0.",
+    label: "Experience"
   },
   {
-    id: "03",
-    title: "ACHIEVEMENT",
-    subtitle: "The Validation",
-    content: "Awarded 1st Prize for Mini Project and 3rd Prize at SRIIT Hackathon. Season 8 Code Vipassana Finisher.",
-    theme: "#A77F60"
-  },
-  {
-    id: "04",
-    title: "INTERNSHIP",
-    subtitle: "The Professional",
-    content: "Infosys Springboard 6.0 Full Stack Developer Residency. Mastering scalable architectures in a corporate ecosystem.",
-    theme: "#F3E4C9"
-  },
-  {
-    id: "05",
-    title: "FREELANCE",
-    subtitle: "The Autonomy",
-    content: "Launching impactful brands, from cinematic photography portfolios to comprehensive institutional college systems.",
-    theme: "#CCD67F"
-  },
-  {
-    id: "06",
-    title: "FUTURE",
-    subtitle: "The Horizon",
-    content: "Exploring the convergence of AI, Data Science, and autonomous digital systems to build what's next.",
-    theme: "#8A5F41"
+    title: "What I’m Doing Now",
+    content: "Currently engineering an institutional college portal while exploring the frontiers of AI integration and high-performance web systems.",
+    label: "Vision"
   }
 ];
 
-const Chapter = ({ chapter, index }) => {
-  const container = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start end", "end start"]
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const opacity = useTransform(scrollYProgress, [0.3, 0.5, 0.7], [0, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0.3, 0.5, 0.7], [0.8, 1, 0.8]);
-
-  return (
-    <div ref={container} className="h-screen w-full flex items-center justify-center sticky top-0 overflow-hidden bg-dark-bg">
-      <motion.div 
-        style={{ opacity, scale }}
-        className="max-w-6xl px-6 w-full text-center space-y-12"
-      >
-        <span className="text-moss-highlight text-xs font-black uppercase tracking-[20px] block mb-10">Chapter {chapter.id}</span>
-        
-        <h2 className="text-[6rem] md:text-[14rem] font-black leading-none tracking-tighter text-earth-light relative">
-          {chapter.title}
-          <motion.div 
-            style={{ x: y }}
-            className="absolute inset-0 text-white/[0.03] -z-10 whitespace-nowrap"
-          >
-            {chapter.title} {chapter.title}
-          </motion.div>
-        </h2>
-        
-        <div className="space-y-6 max-w-3xl mx-auto">
-          <h3 className="text-2xl md:text-4xl text-earth-secondary font-black tracking-[10px] uppercase">{chapter.subtitle}</h3>
-          <p className="text-earth-light/50 text-xl md:text-2xl leading-relaxed italic border-l-4 border-moss-highlight/20 pl-10">
-            "{chapter.content}"
-          </p>
-        </div>
-      </motion.div>
-      
-      {/* Decorative Line */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-20">
-        <div className="h-20 w-[1px] bg-gradient-to-b from-transparent via-earth-light to-transparent" />
-      </div>
-    </div>
-  );
-};
-
 const About = () => {
   return (
-    <section id="about" className="relative">
-      {chapters.map((chapter, index) => (
-        <Chapter key={chapter.id} chapter={chapter} index={index} />
-      ))}
+    <section id="about" className="py-32 px-6 bg-dark-bg relative overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-24">
+          <span className="section-label">A Brief Overview</span>
+          <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-earth-light">THE <span className="text-moss-highlight/60">NARRATIVE</span></h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          {strongBlocks.map((block, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.8 }}
+              viewport={{ once: true }}
+              className="premium-card p-12 space-y-8"
+            >
+              <span className="text-[10px] font-bold tracking-[6px] text-earth-secondary/40 uppercase block">{block.label}</span>
+              <h3 className="text-3xl font-bold text-earth-light">{block.title}</h3>
+              <p className="text-earth-light/50 text-lg leading-relaxed font-medium">
+                {block.content}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 };

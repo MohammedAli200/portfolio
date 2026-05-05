@@ -1,95 +1,88 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaTimes } from 'react-icons/fa';
-import Magnetic from './Magnetic';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 
 const projects = [
   {
     title: "AI Synthesis Platform",
-    tagline: "The Future of Intelligence",
-    description: "An advanced digital nervous system leveraging Gemini AI and Firebase for real-time institutional insight generation.",
-    tech: ["React", "Gemini", "Firebase"],
+    description: "An advanced digital infrastructure leveraging Gemini AI and Firebase for real-time insight generation.",
+    tech: ["React", "Gemini AI", "Firebase"],
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1000",
-    color: "#8A5F41"
+    links: { github: "#", live: "#" }
   },
   {
-    title: "Cinematic Visuals",
-    tagline: "The Art of Motion",
-    description: "A high-performance sanctuary for visual arts, designed with a focus on buttery motion and earthy aesthetics.",
-    tech: ["Framer", "React", "Shaders"],
+    title: "Photography Portfolio",
+    description: "A high-performance sanctuary for visual arts, designed with a focus on refined motion and clean aesthetics.",
+    tech: ["React", "Framer Motion", "Tailwind"],
     image: "https://images.unsplash.com/photo-1452581764120-0433290680dc?auto=format&fit=crop&q=80&w=1000",
-    color: "#CCD67F"
+    links: { github: "#", live: "#" }
   },
   {
     title: "Institutional Portal",
-    tagline: "Scalable Infrastructure",
-    description: "A modular full-stack system architected for student resource streamlining and academic management.",
-    tech: ["Node", "MongoDB", "React"],
+    description: "A scalable modular system architected for student resource streamlining and academic management.",
+    tech: ["React", "Node.js", "MongoDB"],
     image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80&w=1000",
-    color: "#A77F60"
+    links: { github: "#", live: "#" }
   }
 ];
 
-const HorizontalProjects = () => {
-  const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-  });
-
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-66%"]);
-
+const Projects = () => {
   return (
-    <section ref={targetRef} className="relative h-[300vh] bg-dark-bg">
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <motion.div style={{ x }} className="flex gap-20 px-24">
-          <div className="flex flex-col justify-center min-w-[600px] space-y-10 pr-20">
-            <span className="text-moss-highlight text-xs font-black uppercase tracking-[20px]">Showcase</span>
-            <h2 className="text-[12rem] font-black leading-none tracking-tighter">PROJECT <br /> <span className="gradient-text-luxury">LAUNCHES</span></h2>
-            <p className="text-earth-light/40 text-2xl italic leading-relaxed max-w-md">
-              "Every line of code is an architectural decision. Every interface is a launch of a new experience."
-            </p>
-          </div>
+    <section id="projects" className="py-32 px-6 bg-dark-bg relative overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-24">
+          <span className="section-label">Selected Works</span>
+          <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-earth-light">PROJECT <span className="text-moss-highlight/60">GALLERY</span></h2>
+        </div>
 
+        <div className="grid grid-cols-1 gap-24">
           {projects.map((project, index) => (
-            <div key={index} className="group relative h-[80vh] w-[80vw] md:w-[60vw] flex-shrink-0 luxury-panel overflow-hidden p-12 md:p-24 flex flex-col justify-between">
-              <div className="absolute inset-0 z-0">
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  className="h-full w-full object-cover opacity-20 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-bg via-dark-bg/50 to-transparent" />
-              </div>
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              viewport={{ once: true }}
+              className="premium-card overflow-hidden group"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 p-8 md:p-16 items-center">
+                <div className="space-y-8">
+                  <h3 className="text-4xl md:text-5xl font-bold text-earth-light">{project.title}</h3>
+                  <p className="text-xl text-earth-light/50 leading-relaxed italic">
+                    "{project.description}"
+                  </p>
+                  <div className="flex flex-wrap gap-4">
+                    {project.tech.map(t => (
+                      <span key={t} className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest bg-white/5 text-earth-light/40 rounded-lg border border-white/5">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex gap-8 pt-4">
+                    <a href={project.links.github} className="text-sm font-bold text-earth-light/60 hover:text-moss-highlight transition-colors flex items-center gap-2">
+                      <FaGithub /> Repository
+                    </a>
+                    <a href={project.links.live} className="text-sm font-bold text-earth-light/60 hover:text-moss-highlight transition-colors flex items-center gap-2">
+                      <FaExternalLinkAlt /> Live Demo
+                    </a>
+                  </div>
+                </div>
 
-              <div className="relative z-10 space-y-6">
-                <span className="text-moss-highlight text-sm font-black uppercase tracking-[10px]">{project.tagline}</span>
-                <h3 className="text-7xl md:text-9xl font-black text-earth-light tracking-tighter uppercase">{project.title}</h3>
-                <div className="flex flex-wrap gap-4">
-                  {project.tech.map(t => (
-                    <span key={t} className="px-6 py-2 rounded-full border border-earth-light/20 text-[10px] font-black uppercase tracking-[5px] text-earth-light/60">{t}</span>
-                  ))}
+                <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/5 group-hover:scale-[1.02] transition-transform duration-1000">
+                  <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-1000"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-bg/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 </div>
               </div>
-
-              <div className="relative z-10 flex flex-col md:flex-row justify-between items-end gap-10">
-                <p className="text-earth-light/50 text-xl md:text-2xl italic max-w-xl leading-relaxed border-l-4 border-moss-highlight/20 pl-10">
-                  {project.description}
-                </p>
-                <Magnetic>
-                  <a href="#" className="btn-magnetic">Launch Case <FaExternalLinkAlt className="inline ml-4" /></a>
-                </Magnetic>
-              </div>
-
-              {/* Aesthetic Numbers */}
-              <div className="absolute top-10 right-10 text-[10rem] font-black text-white/[0.03] select-none">
-                0{index + 1}
-              </div>
-            </div>
+            </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 };
 
-export default HorizontalProjects;
+export default Projects;

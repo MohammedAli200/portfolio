@@ -1,106 +1,99 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaWhatsapp, FaEnvelope, FaGithub, FaLinkedin, FaPaperPlane } from 'react-icons/fa';
-import Magnetic from './Magnetic';
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-40 px-6 bg-dark-bg relative overflow-hidden">
+    <section id="contact" className="py-32 px-6 bg-dark-bg relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
-          <div className="space-y-16">
-            <div className="space-y-6">
-              <span className="text-moss-highlight text-xs font-black uppercase tracking-[20px] block mb-8">Inquiry</span>
-              <h2 className="text-[6rem] md:text-[10rem] font-black leading-[0.8] tracking-tighter">LET'S <br /> <span className="gradient-text-luxury">CONNECT</span></h2>
-              <p className="text-earth-light/40 text-3xl md:text-4xl italic leading-relaxed max-w-lg border-l-8 border-moss-highlight/20 pl-12 font-medium">
-                "Let's create something meaningful together."
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+          <div className="space-y-12">
+            <div>
+              <span className="section-label">Get in Touch</span>
+              <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-earth-light mb-8">LET'S <span className="text-moss-highlight/60">CONNECT</span></h2>
+              <p className="text-earth-light/50 text-2xl italic leading-relaxed max-w-lg border-l-2 border-moss-highlight/20 pl-8">
+                "Whether it's a new opportunity or a complex challenge, I'm ready to build something meaningful together."
               </p>
             </div>
 
-            <div className="flex flex-col gap-10">
-              <div className="flex items-center gap-10 group cursor-pointer">
-                <div className="w-20 h-20 rounded-[2rem] bg-white/[0.03] flex items-center justify-center text-earth-secondary group-hover:text-moss-highlight transition-all duration-700 border border-white/5">
-                  <FaEnvelope size={28} />
+            <div className="space-y-8">
+              <div className="flex items-center gap-6 group cursor-pointer">
+                <div className="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-center text-earth-secondary/60 group-hover:text-moss-highlight group-hover:border-moss-highlight/30 transition-all duration-500">
+                  <FaEnvelope size={20} />
                 </div>
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-[8px] text-earth-secondary/40 mb-2">Digital Mail</p>
-                  <p className="text-earth-light text-2xl font-medium group-hover:text-moss-highlight transition-colors">alimohammed3731@gmail.com</p>
+                  <p className="text-[9px] font-black uppercase tracking-widest text-earth-secondary/40 mb-1">Electronic Mail</p>
+                  <p className="text-earth-light font-medium group-hover:text-moss-highlight transition-colors">alimohammed3731@gmail.com</p>
                 </div>
               </div>
 
               <div 
-                className="flex items-center gap-10 group cursor-pointer" 
+                className="flex items-center gap-6 group cursor-pointer" 
                 onClick={() => window.open('https://wa.me/9052404441')}
               >
-                <div className="w-20 h-20 rounded-[2rem] bg-white/[0.03] flex items-center justify-center text-earth-secondary group-hover:text-moss-highlight transition-all duration-700 border border-white/5">
-                  <FaWhatsapp size={28} />
+                <div className="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-center text-earth-secondary/60 group-hover:text-moss-highlight group-hover:border-moss-highlight/30 transition-all duration-500">
+                  <FaWhatsapp size={20} />
                 </div>
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-[8px] text-earth-secondary/40 mb-2">Instant Signal</p>
-                  <p className="text-earth-light text-2xl font-medium group-hover:text-moss-highlight transition-colors">+91 9052404441</p>
+                  <p className="text-[9px] font-black uppercase tracking-widest text-earth-secondary/40 mb-1">Direct Message</p>
+                  <p className="text-earth-light font-medium group-hover:text-moss-highlight transition-colors">+91 9052404441</p>
                 </div>
               </div>
             </div>
 
-            <div className="flex gap-10 pt-10">
+            <div className="flex gap-6 pt-6">
               {[
                 { icon: <FaGithub />, link: "https://github.com/MohammedAli200" },
                 { icon: <FaLinkedin />, link: "https://www.linkedin.com/in/mohammed-ali-46a95a2b7/" }
               ].map((social, i) => (
-                <Magnetic key={i}>
-                  <a 
-                    href={social.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-20 h-20 rounded-[2rem] bg-white/[0.03] flex items-center justify-center text-earth-secondary hover:text-moss-highlight transition-all border border-white/5"
-                  >
-                    {social.icon}
-                  </a>
-                </Magnetic>
+                <a 
+                  key={i}
+                  href={social.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-earth-secondary/40 hover:text-earth-light hover:border-earth-light transition-all duration-500"
+                >
+                  {social.icon}
+                </a>
               ))}
             </div>
           </div>
 
-          <div className="luxury-panel p-16 md:p-24 relative overflow-hidden">
-            <form className="space-y-16" onSubmit={(e) => e.preventDefault()}>
-              <div className="space-y-6">
-                <label className="text-xs font-black uppercase tracking-[15px] text-earth-secondary/60 block">Full Identity</label>
+          <div className="premium-card p-10 md:p-16 relative overflow-hidden">
+            <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase tracking-[6px] text-earth-secondary/60 ml-4">Full Identity</label>
                 <input 
                   type="text" 
-                  className="w-full bg-transparent border-b-2 border-white/5 p-6 text-earth-light focus:outline-none focus:border-moss-highlight transition-all text-2xl placeholder:text-white/[0.05]"
-                  placeholder="Entity or Name"
+                  className="w-full bg-white/[0.02] border border-white/5 rounded-2xl p-6 text-earth-light focus:outline-none focus:border-white/20 transition-all text-base placeholder:text-white/[0.05]"
+                  placeholder="The name of your entity"
                 />
               </div>
-              <div className="space-y-6">
-                <label className="text-xs font-black uppercase tracking-[15px] text-earth-secondary/60 block">Digital Address</label>
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase tracking-[6px] text-earth-secondary/60 ml-4">Email Address</label>
                 <input 
                   type="email" 
-                  className="w-full bg-transparent border-b-2 border-white/5 p-6 text-earth-light focus:outline-none focus:border-moss-highlight transition-all text-2xl placeholder:text-white/[0.05]"
-                  placeholder="mail@example.com"
+                  className="w-full bg-white/[0.02] border border-white/5 rounded-2xl p-6 text-earth-light focus:outline-none focus:border-white/20 transition-all text-base placeholder:text-white/[0.05]"
+                  placeholder="Where can I reach you?"
                 />
               </div>
-              <div className="space-y-6">
-                <label className="text-xs font-black uppercase tracking-[15px] text-earth-secondary/60 block">Strategic Message</label>
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase tracking-[6px] text-earth-secondary/60 ml-4">Collaborative Brief</label>
                 <textarea 
                   rows="4"
-                  className="w-full bg-transparent border-b-2 border-white/5 p-6 text-earth-light focus:outline-none focus:border-moss-highlight transition-all text-2xl resize-none placeholder:text-white/[0.05]"
+                  className="w-full bg-white/[0.02] border border-white/5 rounded-2xl p-6 text-earth-light focus:outline-none focus:border-white/20 transition-all text-base resize-none placeholder:text-white/[0.05]"
                   placeholder="Outline your vision..."
                 />
               </div>
-              <Magnetic>
-                <button className="btn-magnetic w-full py-10 flex items-center justify-center gap-8 group">
-                  <FaPaperPlane className="group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform duration-700" /> Dispatch Signal
-                </button>
-              </Magnetic>
+              <button className="btn-premium w-full flex items-center justify-center gap-4 py-5 text-sm group">
+                <FaPaperPlane className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-500" /> Send Message
+              </button>
             </form>
-            
-            {/* Aesthetic Overlays */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-moss-highlight/5 blur-[100px] -z-10" />
           </div>
         </div>
       </div>
       
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-[25px] text-earth-secondary/10 whitespace-nowrap">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-[20px] text-earth-secondary/10 whitespace-nowrap">
         MOHAMMED ALI • ARCHITECTING IMPACT
       </div>
     </section>
