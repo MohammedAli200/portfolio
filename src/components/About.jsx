@@ -31,14 +31,14 @@ const About = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
           
           {/* Header Block */}
-          <div className="lg:col-span-4 sticky top-40 h-fit">
+          <div className="lg:col-span-4 lg:sticky top-40 h-fit">
             <span className="section-label-light">The Narrative</span>
-            <h2 className="text-[4rem] md:text-[5rem] font-bold leading-tight mb-8">A Journey of <span className="text-earth-primary/50">Purpose.</span></h2>
+            <h2 className="text-[2.5rem] md:text-[5rem] font-bold leading-tight mb-8">A Journey of <span className="text-earth-primary/50">Purpose.</span></h2>
             <div className="h-1 w-20 bg-earth-primary/20" />
           </div>
 
           {/* Narrative Content */}
-          <div className="lg:col-span-8 space-y-32">
+          <div className="lg:col-span-8 space-y-20 md:space-y-32">
             {narrativeBlocks.map((block, index) => (
               <motion.div
                 key={index}
@@ -46,15 +46,15 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, ease: "easeOut" }}
                 viewport={{ once: true, margin: "-100px" }}
-                className="space-y-8 max-w-2xl"
+                className="space-y-6 md:space-y-8 max-w-2xl"
               >
                 <span className="text-[11px] font-black uppercase tracking-[10px] text-earth-secondary/40 block">
                   {block.label}
                 </span>
-                <h3 className="text-4xl md:text-5xl font-bold text-text-primary">
+                <h3 className="text-3xl md:text-5xl font-bold text-text-primary">
                   {block.title}
                 </h3>
-                <p className="text-2xl text-text-secondary leading-relaxed font-medium">
+                <p className="text-lg md:text-2xl text-text-secondary leading-relaxed font-medium">
                   {block.content}
                 </p>
               </motion.div>

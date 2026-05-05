@@ -45,33 +45,33 @@ const ProjectCard = ({ project, isFeatured }) => (
     viewport={{ once: true }}
     className={`editorial-card group overflow-hidden ${isFeatured ? 'lg:flex gap-12' : ''}`}
   >
-    <div className={`relative overflow-hidden ${isFeatured ? 'lg:w-3/5 h-[400px] lg:h-[500px]' : 'aspect-video'}`}>
+    <div className={`relative overflow-hidden ${isFeatured ? 'lg:w-3/5 h-[250px] sm:h-[400px] lg:h-[500px]' : 'aspect-video'}`}>
       <img 
         src={project.image} 
         alt={project.title} 
         className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
       />
       <div className="absolute top-6 right-6 flex gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
-        <a href="#" className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center text-text-primary hover:bg-earth-primary hover:text-white transition-all shadow-lg">
+        <a href="#" className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 flex items-center justify-center text-text-primary hover:bg-earth-primary hover:text-white transition-all shadow-lg">
           <FaGithub size={18} />
         </a>
-        <a href="#" className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center text-text-primary hover:bg-earth-primary hover:text-white transition-all shadow-lg">
+        <a href="#" className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 flex items-center justify-center text-text-primary hover:bg-earth-primary hover:text-white transition-all shadow-lg">
           <FaExternalLinkAlt size={16} />
         </a>
       </div>
     </div>
 
-    <div className={`p-10 flex flex-col justify-center ${isFeatured ? 'lg:w-2/5 space-y-8' : 'space-y-6'}`}>
+    <div className={`p-6 md:p-10 flex flex-col justify-center ${isFeatured ? 'lg:w-2/5 space-y-6 md:space-y-8' : 'space-y-4 md:space-y-6'}`}>
       <div className="space-y-2">
         <span className="text-[10px] font-black uppercase tracking-widest text-earth-secondary/60 block">{project.category}</span>
-        <h3 className={`${isFeatured ? 'text-5xl' : 'text-3xl'} font-bold group-hover:text-earth-primary transition-colors tracking-tight`}>
+        <h3 className={`${isFeatured ? 'text-3xl md:text-5xl' : 'text-2xl md:text-3xl'} font-bold group-hover:text-earth-primary transition-colors tracking-tight`}>
           {project.title}
         </h3>
       </div>
-      <p className="text-text-secondary/70 leading-relaxed italic text-lg">
+      <p className="text-text-secondary/70 leading-relaxed italic text-base md:text-lg">
         "{project.description}"
       </p>
-      <div className="flex flex-wrap gap-3 pt-6 border-t border-black/5">
+      <div className="flex flex-wrap gap-2 md:gap-3 pt-6 border-t border-black/5">
         {project.tech.map(t => (
           <span key={t} className="px-3 py-1 bg-light-contrast/30 text-[9px] font-black uppercase tracking-widest text-text-secondary/60 rounded-md">
             {t}
@@ -87,19 +87,19 @@ const Projects = () => {
   const others = projects.filter(p => !p.featured);
 
   return (
-    <section id="projects" className="py-40 px-6 bg-light-contrast/10 relative">
+    <section id="projects" className="py-24 md:py-40 px-6 bg-light-contrast/10 relative">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-32">
+        <div className="mb-20 md:mb-32">
           <span className="section-label-light">The Showcase</span>
-          <h2 className="text-[4rem] md:text-[5rem] font-bold tracking-tight">Curated <span className="text-earth-primary/50">Creations</span></h2>
+          <h2 className="text-[2.5rem] md:text-[5rem] font-bold tracking-tight">Curated <span className="text-earth-primary/50">Creations</span></h2>
         </div>
 
-        <div className="space-y-20">
+        <div className="space-y-12 md:space-y-20">
           {/* Featured Project */}
           {featured && <ProjectCard project={featured} isFeatured={true} />}
 
           {/* Grid Layout for others */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {others.map((project, index) => (
               <ProjectCard key={index} project={project} isFeatured={false} />
             ))}

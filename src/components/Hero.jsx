@@ -19,12 +19,12 @@ const Hero = () => {
           >
             <div className="space-y-4">
               <span className="text-earth-primary text-[10px] uppercase font-black tracking-[10px] block">Full-Stack Developer</span>
-              <h1 className="text-[5rem] md:text-[7rem] font-bold leading-[0.9] tracking-tight text-text-primary">
+              <h1 className="text-[3.5rem] md:text-[7rem] font-bold leading-[0.9] tracking-tight text-text-primary">
                 Mohammed <br /> Ali
               </h1>
             </div>
             
-            <p className="text-2xl md:text-3xl text-text-secondary leading-relaxed max-w-lg border-l-4 border-earth-primary/20 pl-10 font-medium">
+            <p className="text-xl md:text-3xl text-text-secondary leading-relaxed max-w-lg border-l-4 border-earth-primary/20 pl-6 md:pl-10 font-medium">
               Building <span className="text-earth-primary">scalable</span> and user-focused web applications.
             </p>
           </motion.div>
@@ -33,12 +33,12 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 1 }}
-            className="flex flex-wrap gap-8 pt-6"
+            className="flex flex-col sm:flex-row gap-4 sm:gap-8 pt-6"
           >
-            <a href="#projects" className="btn-editorial flex items-center gap-4">
+            <a href="#projects" className="btn-editorial flex items-center justify-center gap-4">
               View Work <FaArrowRight size={12} />
             </a>
-            <a href="/resume.pdf" className="btn-outline-editorial flex items-center gap-4">
+            <a href="/resume.pdf" className="btn-outline-editorial flex items-center justify-center gap-4">
               Download Resume <FaDownload size={12} />
             </a>
           </motion.div>
@@ -55,7 +55,7 @@ const Hero = () => {
             {/* Soft background shadow blob */}
             <div className="absolute inset-[-40px] bg-earth-contrast/30 blur-[100px] rounded-full pointer-events-none opacity-50" />
             
-            <div className="relative z-10 w-[350px] h-[450px] md:w-[450px] md:h-[580px] rounded-[2.5rem] overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.08)] group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.12)] transition-all duration-700 hover:-translate-y-2">
+            <div className="relative z-10 w-[280px] h-[380px] sm:w-[350px] sm:h-[450px] md:w-[450px] md:h-[580px] rounded-[2.5rem] overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.08)] group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.12)] transition-all duration-700 hover:-translate-y-2">
               <img 
                 src={img} 
                 alt="Mohammed Ali" 
@@ -68,7 +68,7 @@ const Hero = () => {
       </div>
 
       {/* Editorial Watermark */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[11px] font-bold uppercase tracking-[20px] text-text-secondary/10 whitespace-nowrap select-none">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[9px] md:text-[11px] font-bold uppercase tracking-[10px] md:tracking-[20px] text-text-secondary/10 whitespace-nowrap select-none">
         Architecting Solutions
       </div>
     </section>
