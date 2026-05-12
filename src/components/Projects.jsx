@@ -66,7 +66,7 @@ const Projects = () => {
               <div className="relative aspect-square overflow-hidden rounded-2xl bg-light-contrast/30">
                 <img 
                   src={project.image} 
-                  alt={project.title} 
+                  alt={`${project.title} - ${project.category} project by Mohammed Ali`} 
                   className="w-full h-full object-cover grayscale-[0.4] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500" />

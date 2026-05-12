@@ -65,30 +65,36 @@ const Contact = () => {
           <div className="editorial-card p-12 md:p-20 relative overflow-hidden bg-white/50 backdrop-blur-xl">
             <form className="space-y-12" onSubmit={(e) => e.preventDefault()}>
               <div className="space-y-4">
-                <label className="text-[10px] font-black uppercase tracking-[10px] text-earth-secondary/60 ml-4">Full Name</label>
+                <label htmlFor="name" className="text-[10px] font-black uppercase tracking-[10px] text-earth-secondary/60 ml-4">Full Name</label>
                 <input 
+                  id="name"
                   type="text" 
                   className="w-full bg-black/[0.02] border-b border-black/10 p-6 text-text-primary focus:outline-none focus:border-earth-primary transition-all text-xl placeholder:text-text-secondary/20"
                   placeholder="Identity"
+                  required
                 />
               </div>
               <div className="space-y-4">
-                <label className="text-[10px] font-black uppercase tracking-[10px] text-earth-secondary/60 ml-4">Email Address</label>
+                <label htmlFor="email" className="text-[10px] font-black uppercase tracking-[10px] text-earth-secondary/60 ml-4">Email Address</label>
                 <input 
+                  id="email"
                   type="email" 
                   className="w-full bg-black/[0.02] border-b border-black/10 p-6 text-text-primary focus:outline-none focus:border-earth-primary transition-all text-xl placeholder:text-text-secondary/20"
                   placeholder="mail@example.com"
+                  required
                 />
               </div>
               <div className="space-y-4">
-                <label className="text-[10px] font-black uppercase tracking-[10px] text-earth-secondary/60 ml-4">The Strategic Brief</label>
+                <label htmlFor="message" className="text-[10px] font-black uppercase tracking-[10px] text-earth-secondary/60 ml-4">The Strategic Brief</label>
                 <textarea 
+                  id="message"
                   rows="4"
                   className="w-full bg-black/[0.02] border-b border-black/10 p-6 text-text-primary focus:outline-none focus:border-earth-primary transition-all text-xl resize-none placeholder:text-text-secondary/20"
                   placeholder="Outline your vision..."
+                  required
                 />
               </div>
-              <button className="btn-editorial w-full flex items-center justify-center gap-6 py-6 group">
+              <button type="submit" className="btn-editorial w-full flex items-center justify-center gap-6 py-6 group">
                 <FaPaperPlane className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-500" /> Dispatch Signal
               </button>
             </form>
