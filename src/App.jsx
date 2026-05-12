@@ -34,7 +34,7 @@ const PageLoader = () => (
         className="absolute w-full h-full bg-earth-primary"
       />
     </div>
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="text-earth-primary/40 font-bold uppercase text-[9px] tracking-[10px]"
@@ -51,10 +51,10 @@ const MainSite = () => {
       <Navbar />
       <main>
         <Hero />
-        <About />
-        <Projects />
-        <Freelance />
         <Skills />
+        <About />
+        <Freelance />
+        <Projects />
         <Experience />
         <GitHubStats />
         <Contact />
@@ -77,8 +77,8 @@ function App() {
     requestAnimationFrame(raf);
 
     const timer = setTimeout(() => setIsLoading(false), 2000);
-    return () => { 
-      lenis.destroy(); 
+    return () => {
+      lenis.destroy();
       clearTimeout(timer);
     };
   }, []);
