@@ -12,6 +12,7 @@ import Projects from './components/Projects';
 import GitHubStats from './components/GitHubStats';
 import ResumeCTA from './components/ResumeCTA';
 import Skills from './components/Skills';
+import Freelance from './components/Freelance';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
@@ -52,6 +53,7 @@ const MainSite = () => {
         <Hero />
         <About />
         <Projects />
+        <Freelance />
         <Skills />
         <Experience />
         <GitHubStats />
