@@ -3,11 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
 const navLinks = [
-  { name: 'Home', href: '#home' },
-  { name: 'Narrative', href: '#about' },
-  { name: 'Gallery', href: '#projects' },
-  { name: 'Record', href: '#experience' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'About', href: '#about' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Freelance', href: '#freelance' },
+  { name: 'Projects', href: '#projects' },
+  { name: 'Achievements', href: '#achievements' },
+  { name: 'Connect', href: '#contact' },
 ];
 
 const Navbar = () => {
@@ -36,15 +37,18 @@ const Navbar = () => {
               <a 
                 key={link.name} 
                 href={link.href}
-                className="text-[10px] font-black uppercase tracking-[5px] text-text-secondary/60 hover:text-earth-primary transition-colors relative group"
+                className={`text-[10px] font-black uppercase tracking-[5px] transition-colors relative group ${
+                  link.name === 'Connect' 
+                  ? 'px-6 py-2 bg-text-primary text-white rounded-full hover:bg-earth-primary shadow-sm' 
+                  : 'text-text-secondary/60 hover:text-earth-primary'
+                }`}
               >
                 {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-earth-primary transition-all duration-500 group-hover:w-full" />
+                {link.name !== 'Connect' && (
+                  <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-earth-primary transition-all duration-500 group-hover:w-full" />
+                )}
               </a>
             ))}
-            <a href="#contact" className="px-6 py-2 bg-text-primary text-white text-[10px] font-black uppercase tracking-[4px] rounded-full hover:bg-earth-primary transition-colors shadow-sm">
-              Connect
-            </a>
           </div>
 
           {/* Mobile Toggle */}

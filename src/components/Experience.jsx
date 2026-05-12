@@ -1,90 +1,120 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaBriefcase, FaCertificate, FaTrophy } from 'react-icons/fa';
+import { FaTrophy, FaMedal, FaAward, FaUniversity, FaUsers } from 'react-icons/fa';
 
-const credentials = [
+const honors = [
   {
-    type: "Residency",
-    title: "Full Stack Development Internship",
-    org: "Infosys Springboard 6.0",
-    date: "2024",
-    icon: <FaBriefcase />,
-    desc: "Engineered scalable web applications and mastered corporate development standards."
-  },
-  {
-    type: "Honors",
-    title: "1st Prize – Mini Project",
-    org: "University Level",
-    date: "2023",
+    title: "1st Prize – Departmental Project Expo",
+    project: "NESTANA Collaboration Platform",
+    desc: "Recognized for full-stack architecture and community-centric design.",
     icon: <FaTrophy />,
-    desc: "Recognized for exceptional architectural implementation of complex logic systems."
   },
   {
-    type: "Honors",
-    title: "3rd Prize – Hackathon",
-    org: "SRIIT College Innovation",
-    date: "2023",
-    icon: <FaTrophy />,
-    desc: "Achieved podium finish for rapid prototype development and real-time execution."
+    title: "3rd Prize – Regional Hackathon",
+    project: "Student Shield Analytics",
+    desc: "Awarded for rapid prototyping of predictive mental health dashboards.",
+    icon: <FaMedal />,
   },
   {
-    type: "Mastery",
-    title: "Code Vipassana Finisher",
-    org: "Season 8 Residency",
-    date: "2023",
-    icon: <FaCertificate />,
-    desc: "Completed an intensive program focused on deep-tech mastery and system architecture."
+    title: "Honorable Mention",
+    project: "Google Build & Blog Marathon",
+    desc: "Recognized for technical blogging and engineering contributions.",
+    icon: <FaAward />,
   }
 ];
 
-const Experience = () => {
+const Achievements = () => {
   return (
-    <section id="experience" className="py-24 md:py-40 px-6 bg-light-bg relative">
-      <div className="max-w-5xl mx-auto">
-        <div className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
-          <div>
-            <span className="section-label-light">The Record</span>
-            <h2 className="text-[2.5rem] md:text-[4rem] font-bold tracking-tight">Experience & <br className="hidden md:block" /> <span className="text-earth-primary/50">Recognition</span></h2>
-          </div>
-          <div className="bg-earth-primary/5 px-6 py-3 md:px-8 md:py-4 rounded-2xl border border-earth-primary/10 w-fit">
-            <span className="text-[10px] font-black uppercase tracking-widest text-earth-primary">Ready for New Challenges</span>
-          </div>
+    <section id="achievements" className="py-24 md:py-32 px-6 bg-[#FCFCFC]">
+      <div className="max-w-7xl mx-auto">
+
+        {/* Minimal Header consistent with Skills component */}
+        <div className="mb-20 space-y-4">
+          <motion.span
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            className="text-earth-primary font-bold tracking-[0.4em] uppercase text-xs block"
+          >
+            Recognition
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-6xl font-bold tracking-tighter text-text-primary"
+          >
+            Honors & <span className="text-earth-primary/40">Awards</span>
+          </motion.h2>
+          <div className="h-1 w-20 bg-earth-primary/20 rounded-full" />
         </div>
 
-        <div className="space-y-6 md:space-y-10">
-          {credentials.map((item, index) => (
+        {/* Minimal Structured List (Table-like consistency) */}
+        <div className="border-t border-black/5">
+          {honors.map((item, idx) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.8 }}
-              viewport={{ once: true }}
-              className="group editorial-card p-6 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10 hover:border-earth-primary/30"
+              key={idx}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: idx * 0.1 }}
+              className="group flex flex-col md:flex-row py-10 border-b border-black/5 hover:bg-black/[0.01] transition-colors"
             >
-              <div className="w-14 h-14 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-light-contrast/50 flex items-center justify-center text-earth-primary text-2xl md:text-3xl shrink-0 group-hover:bg-earth-primary group-hover:text-white transition-all duration-500">
-                {item.icon}
-              </div>
-              <div className="flex-1 space-y-3">
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-                  <div>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-earth-secondary/40 block mb-1">{item.type}</span>
-                    <h3 className="text-lg md:text-2xl font-bold text-text-primary leading-tight">{item.title}</h3>
-                    <p className="text-sm font-bold text-earth-primary/60">{item.org}</p>
-                  </div>
-                  <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-text-secondary/30 bg-black/5 px-4 md:px-5 py-1.5 md:py-2 rounded-full h-fit w-fit">
-                    {item.date}
-                  </span>
+              <div className="md:w-1/4 mb-4 md:mb-0 flex items-center gap-4">
+                <div className="text-2xl text-earth-primary/40 group-hover:text-earth-primary transition-colors">
+                  {item.icon}
                 </div>
-                <p className="text-text-secondary/70 text-sm md:text-base leading-relaxed italic max-w-2xl">
-                  "{item.desc}"
+                <span className="text-[10px] font-black uppercase tracking-widest text-text-secondary/40">
+                  Award 0{idx + 1}
+                </span>
+              </div>
+
+              <div className="md:w-3/4 flex flex-col md:flex-row justify-between gap-4">
+                <div className="space-y-1">
+                  <h3 className="text-xl font-bold text-text-primary tracking-tight">{item.title}</h3>
+                  <p className="text-sm font-bold text-earth-primary/60 uppercase tracking-wider">{item.project}</p>
+                </div>
+                <p className="md:w-1/2 text-text-secondary/60 text-sm leading-relaxed md:text-right">
+                  {item.desc}
                 </p>
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* Secondary Credentials Section */}
+        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8">
+          {[
+            {
+              title: "Infosys Springboard",
+              sub: "Frontend Developer Intern",
+              icon: <FaUniversity />,
+              text: "Successfully completed intensive 2-month professional training."
+            },
+            {
+              title: "ALTS Code Crafters",
+              sub: "Coding Club President",
+              icon: <FaUsers />,
+              text: "Leading a community of 200+ engineering students."
+            }
+          ].map((cert, i) => (
+            <div key={i} className="p-8 rounded-2xl bg-white border border-black/5 flex items-start gap-6">
+              <div className="text-2xl text-earth-primary/30 mt-1">{cert.icon}</div>
+              <div>
+                <h4 className="font-bold text-text-primary">{cert.title}</h4>
+                <p className="text-[10px] font-black text-earth-primary/50 uppercase tracking-widest mb-2">{cert.sub}</p>
+                <p className="text-xs text-text-secondary/60 leading-relaxed">{cert.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom Detail */}
+        <div className="mt-12 text-right">
+          <p className="text-[10px] text-text-secondary/40 font-black uppercase tracking-widest">
+            Academic Performance: Top 5 Rank — 8.73 CGPA
+          </p>
         </div>
       </div>
     </section>
   );
 };
 
-export default Experience;
+export default Achievements;
